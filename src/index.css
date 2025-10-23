@@ -1,14 +1,53 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+
+@theme {
+  /* Primary - Indigo */
+  --color-primary-50: #ECEEFE;
+  --color-primary-100: #D9DDFD;
+  --color-primary-200: #B3BBFB;
+  --color-primary-300: #8D99F9;
+  --color-primary-400: #6777F7;
+  --color-primary-500: #6366F1;
+  --color-primary-600: #3C40E8;
+  --color-primary-700: #2226C7;
+  --color-primary-800: #1A1D99;
+  --color-primary-900: #11136A;
+  --color-primary: #6366F1;
+
+  /* Secondary - Slate Gray */
+  --color-secondary-50: #F8FAFC;
+  --color-secondary-100: #F1F5F9;
+  --color-secondary-200: #E2E8F0;
+  --color-secondary-300: #CBD5E1;
+  --color-secondary-400: #94A3B8;
+  --color-secondary-500: #64748B;
+  --color-secondary-600: #475569;
+  --color-secondary-700: #334155;
+  --color-secondary-800: #1E293B;
+  --color-secondary-900: #0F172A;
+  --color-secondary: #F8FAFC;
+
+  /* Accent - Emerald */
+  --color-accent-50: #ECFDF5;
+  --color-accent-100: #D1FAE5;
+  --color-accent-200: #A7F3D0;
+  --color-accent-300: #6EE7B7;
+  --color-accent-400: #34D399;
+  --color-accent-500: #10B981;
+  --color-accent-600: #059669;
+  --color-accent-700: #047857;
+  --color-accent-800: #065F46;
+  --color-accent-900: #064E3B;
+  --color-accent: #10B981;
+
+  /* Font family */
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+}
 
 @layer base {
-  * {
-    @apply border-border;
-  }
   body {
-    @apply bg-secondary-50 text-secondary-900 font-sans;
+    font-family: var(--font-sans);
   }
 }
