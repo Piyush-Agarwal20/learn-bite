@@ -1,0 +1,416 @@
+# LearnBite - Phase-wise Development Plan
+
+## PHASE 1: PROJECT SETUP & FOUNDATION
+
+### 1.1 Initial Setup
+- Initialize React + TypeScript + Vite project
+- Install core dependencies (React Router, Tailwind CSS)
+- Configure Tailwind with custom color palette (Indigo, Slate Gray, Emerald)
+- Set up Inter font family
+- Configure ESLint and Prettier
+- Create basic folder structure (components, pages, services, utils, types)
+
+### 1.2 Supabase Backend Setup
+- Create Supabase project
+- Set up authentication (email/password)
+- Create PostgreSQL database schema
+- Configure Supabase client in React app
+- Set up environment variables
+
+---
+
+## PHASE 2: FRONTEND CORE UI COMPONENTS
+
+### 2.1 Reusable Components
+- Button component (primary, secondary, accent variants)
+- Card component (for lessons, topics, stats)
+- Input fields (text, search, time picker)
+- Progress bar component
+- Loading spinner
+- Bottom navigation bar (Home, Topics, Progress, Profile icons)
+
+### 2.2 Layout Components
+- Main layout with bottom navigation
+- Header component with back button
+- Page container with proper spacing
+- Mobile-responsive grid system
+
+---
+
+## PHASE 3: AUTHENTICATION & ONBOARDING
+
+### 3.1 Authentication Pages
+- Login page
+- Sign up page
+- Password reset page
+- Integrate with Supabase Auth
+
+### 3.2 Onboarding Flow
+- Create `/onboarding` route
+- Multi-step carousel (intro screens)
+- Learning goals selection screen
+- Topic preference selection with chips
+- Notification permission request
+- Daily reminder time picker
+- Difficulty level slider
+- Save preferences to database
+
+---
+
+## PHASE 4: HOME SCREEN & NAVIGATION
+
+### 4.1 Home Screen (`/`)
+- Welcome header with user greeting
+- Streak counter display
+- "Start Today's Lesson" CTA button
+- Quick stats cards (lessons, streaks, badges)
+- Recently studied topics carousel
+- Continue learning section with progress bars
+
+### 4.2 Navigation Setup
+- Implement React Router routes
+- Bottom tab navigation functionality
+- Route guards for authenticated users
+- Navigation state management
+
+---
+
+## PHASE 5: TOPICS SYSTEM
+
+### 5.1 Topics Page (`/topics`)
+- Search bar with filtering
+- Category filter tabs
+- Topic cards with difficulty indicators
+- Topic preview modal
+- "Coming Soon" placeholders
+
+### 5.2 Topic Dashboard (`/topic-dashboard/:topicId`)
+- Topic header with progress percentage
+- Lesson list with completion status
+- Study materials access
+- Topic-specific badges
+- Timeline estimation
+
+---
+
+## PHASE 6: LESSON SYSTEM
+
+### 6.1 Lesson View (`/lesson/:topicId/:lessonId`)
+- Progress indicator at top
+- Lesson title and read time
+- Content display with formatting
+- "Explain Like I'm 5" toggle
+- Lesson completion button
+- Next lesson preview card
+
+### 6.2 Lesson State Management
+- Track lesson progress
+- Mark lessons as complete
+- Save reading position
+- Update user statistics
+
+---
+
+## PHASE 7: FLASHCARDS SYSTEM
+
+### 7.1 Flashcard Interface (`/flashcards/:topicId`)
+- Swipeable card component
+- Card flip animation on tap
+- Touch gesture handling
+- Progress dots indicator
+- "Know it" / "Study more" buttons
+
+### 7.2 Flashcard Logic
+- Spaced repetition algorithm
+- Session completion summary
+- Restart session functionality
+- Track flashcard performance
+
+---
+
+## PHASE 8: QUIZ SYSTEM
+
+### 8.1 Quiz Interface (`/quiz/:topicId`)
+- Question counter and timer
+- Multiple choice cards
+- Answer selection UI
+- Immediate feedback display
+- Explanation popup for incorrect answers
+
+### 8.2 Quiz Engine
+- Adaptive difficulty logic
+- Quiz results summary with score
+- Retry quiz option
+- Save quiz results to database
+
+---
+
+## PHASE 9: PROGRESS TRACKING
+
+### 9.1 Progress Page (`/progress`)
+- Weekly/monthly charts (use chart library like Chart.js or Recharts)
+- Learning streak calendar
+- Achievement badges grid
+- Topic completion percentages
+- Study time statistics
+
+### 9.2 Achievements (`/achievements`)
+- Achievement categories tabs
+- Unlocked/locked badges gallery
+- Badge descriptions
+- Progress toward locked badges
+- Social sharing buttons
+
+---
+
+## PHASE 10: PROFILE & SETTINGS
+
+### 10.1 Profile Page (`/profile`)
+- User avatar and info display
+- Learning preferences toggles
+- Notification settings
+- Daily reminder time picker
+- App theme selection
+- Account management
+
+### 10.2 Offline Manager (`/offline`)
+- Downloaded content list
+- Storage usage indicator
+- Download controls
+- Sync status
+- Content cleanup options
+
+---
+
+## PHASE 11: BACKEND DATABASE SETUP
+
+### 11.1 Database Schema
+**Tables:**
+- users (id, email, name, avatar_url, created_at)
+- user_preferences (user_id, learning_goal, difficulty_level, reminder_time, theme)
+- topics (id, title, category, difficulty, description, estimated_time)
+- lessons (id, topic_id, title, content, order, estimated_read_time)
+- flashcards (id, lesson_id, front_text, back_text)
+- quizzes (id, lesson_id, question_text, options, correct_answer, explanation)
+- user_progress (user_id, lesson_id, completed, completion_date, time_spent)
+- user_quiz_results (user_id, quiz_id, score, attempts, last_attempt_date)
+- user_streaks (user_id, current_streak, longest_streak, last_activity_date)
+- achievements (id, name, description, icon, unlock_condition)
+- user_achievements (user_id, achievement_id, unlocked_date)
+- bookmarks (user_id, lesson_id, created_at)
+
+### 11.2 Row Level Security (RLS)
+- Set up RLS policies for user data protection
+- Ensure users can only access their own data
+- Public read access for topics/lessons/flashcards/quizzes
+
+---
+
+## PHASE 12: BACKEND API SERVICES
+
+### 12.1 Supabase Queries
+- User authentication queries
+- Topic fetching and filtering
+- Lesson CRUD operations
+- Progress tracking queries
+- Achievement checking logic
+- Streak calculation functions
+
+### 12.2 API Integration Layer
+- Create service files for each feature
+- Error handling and loading states
+- Data caching strategies
+- Optimistic UI updates
+
+---
+
+## PHASE 13: AI INTEGRATION (OPENAI GPT-4)
+
+### 13.1 Content Generation
+- Set up OpenAI API client
+- Create prompt templates for lesson generation
+- "Explain Like I'm 5" mode prompts
+- Quiz question generation prompts
+- Flashcard generation from lesson content
+
+### 13.2 AI Service Layer
+- Backend functions to call OpenAI API
+- Content caching to reduce API calls
+- Error handling for AI failures
+- Rate limiting and cost management
+
+---
+
+## PHASE 14: PWA FEATURES
+
+### 14.1 Service Worker Setup
+- Create service worker for offline caching
+- Cache static assets
+- Cache API responses
+- Implement background sync
+
+### 14.2 PWA Configuration
+- Create Web App Manifest
+- Add app icons (multiple sizes)
+- Configure install prompts
+- Test offline functionality
+
+---
+
+## PHASE 15: NOTIFICATIONS & REMINDERS
+
+### 15.1 Push Notifications
+- Set up Web Push API
+- Request notification permissions
+- Daily lesson reminders
+- Streak reminder notifications
+- Achievement unlock notifications
+
+### 15.2 Notification Logic
+- Schedule notifications based on user preferences
+- Handle notification clicks
+- Manage notification settings
+
+---
+
+## PHASE 16: ANIMATIONS & POLISH
+
+### 16.1 UI Animations
+- Page transition animations
+- Card flip animations for flashcards
+- Swipe gesture animations
+- Button hover/click micro-interactions
+- Progress bar animations
+
+### 16.2 Accessibility & Performance
+- Add ARIA labels
+- Keyboard navigation support
+- High contrast mode
+- Touch-friendly button sizes (44px minimum)
+- Lazy loading for images and components
+- Code splitting for faster load times
+
+---
+
+## PHASE 17: TESTING & OPTIMIZATION
+
+### 17.1 Testing
+- Unit tests for utility functions
+- Component tests with React Testing Library
+- Integration tests for user flows
+- E2E tests for critical paths
+- Mobile device testing
+
+### 17.2 Performance Optimization
+- Optimize bundle size
+- Implement code splitting
+- Image optimization
+- Database query optimization
+- Reduce API calls with caching
+
+---
+
+## PHASE 18: DEPLOYMENT
+
+### 18.1 Pre-deployment
+- Environment configuration (dev, staging, production)
+- Build optimization
+- Security audit
+- Performance testing
+
+### 18.2 Deployment
+- Deploy frontend to Vercel/Netlify
+- Configure Supabase production environment
+- Set up custom domain
+- Configure SSL certificates
+- Set up monitoring and analytics
+
+---
+
+## DEVELOPMENT PRIORITY ORDER (MVP First Approach)
+
+**Sprint 1 (Core MVP):**
+- Phase 1: Setup
+- Phase 3: Auth & Onboarding
+- Phase 4: Home Screen
+- Phase 11: Basic Database Schema
+
+**Sprint 2 (Content System):**
+- Phase 2: UI Components
+- Phase 5: Topics
+- Phase 6: Lessons
+- Phase 12: API Services
+
+**Sprint 3 (Interactive Features):**
+- Phase 7: Flashcards
+- Phase 8: Quiz
+- Phase 9: Progress Tracking
+
+**Sprint 4 (AI & Advanced Features):**
+- Phase 13: AI Integration
+- Phase 10: Profile & Settings
+
+**Sprint 5 (PWA & Polish):**
+- Phase 14: PWA Features
+- Phase 15: Notifications
+- Phase 16: Animations & Polish
+
+**Sprint 6 (Launch):**
+- Phase 17: Testing & Optimization
+- Phase 18: Deployment
+
+---
+
+## TECH STACK SUMMARY
+
+**Frontend:**
+- React 18 + TypeScript
+- Vite
+- Tailwind CSS
+- React Router
+- Chart.js/Recharts (for analytics)
+
+**Backend:**
+- Supabase (Auth, Database, Storage)
+- PostgreSQL with Row Level Security
+
+**AI:**
+- OpenAI GPT-4o API
+
+**PWA:**
+- Service Workers
+- Web App Manifest
+- Web Push API
+- Local Storage API
+
+**Tools:**
+- Git for version control
+- ESLint + Prettier for code quality
+- Jest + React Testing Library for testing
+
+---
+
+## ESTIMATED TIMELINE
+
+- Setup & Foundation: 1 week
+- Core MVP (Auth, Home, Topics, Lessons): 2-3 weeks
+- Interactive Features (Flashcards, Quiz, Progress): 2 weeks
+- AI Integration: 1-2 weeks
+- PWA & Advanced Features: 1-2 weeks
+- Testing & Deployment: 1 week
+
+**Total: 8-11 weeks for full application**
+
+---
+
+## NOTES
+
+- Keep components small and reusable
+- Use TypeScript interfaces for type safety
+- Implement error boundaries for graceful error handling
+- Follow mobile-first responsive design
+- Test on multiple devices and browsers
+- Keep accessibility in mind throughout development
+- Document code and API endpoints
+- Use Git branches for feature development
+- Regular commits with clear messages

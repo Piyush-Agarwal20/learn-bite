@@ -1,0 +1,324 @@
+# LearnBite - Product Requirements Document
+
+## 1\. Overview
+
+**App Name:** LearnBite
+
+LearnBite is an AI-powered micro-learning Progressive Web App that revolutionizes education by delivering bite-sized, personalized learning experiences. The app breaks down complex topics into digestible 5-minute daily lessons, interactive flashcards, and quick quizzes, all powered by advanced AI technology. Users can choose from diverse subjects ranging from Marketing and Psychology to Quantum Physics and AI fundamentals.
+
+**Target Audience:** Busy professionals, students, and lifelong learners aged 16-45 who want to acquire new knowledge efficiently without committing to lengthy courses. The app solves the problem of time constraints and information overload by making learning accessible, engaging, and perfectly sized for modern attention spans.
+
+## 2\. Essential Core Features
+
+* **Topic Selection System**: Browse and select from categorized learning topics with difficulty levels
+* **AI-Powered Daily Lessons**: 5-minute personalized lessons generated based on user progress and preferences
+* **Interactive Flashcard System**: Swipe-based flashcard reviews with spaced repetition algorithm
+* **Smart Quiz Engine**: Adaptive quizzes that adjust difficulty based on performance
+* **"Explain Like I'm 5" Mode**: Toggle to simplify complex concepts into child-friendly explanations
+* **Progress Tracking Dashboard**: Visual progress bars, learning streaks, and completion statistics
+* **Achievement System**: Badges and milestones for motivation and gamification
+* **Personalized Learning Path**: AI adapts content difficulty and pacing based on user performance
+* **Offline Content Access**: Download lessons for offline learning
+* **Daily Reminders**: Push notifications for lesson streaks and study reminders
+* **User Profile Management**: Track learning history, preferences, and goals
+* **Content Bookmarking**: Save favorite lessons and flashcards for quick review
+
+## 3\. Tech Stack
+
+**Front-End:**
+
+* React 18+ with TypeScript
+* Tailwind CSS for styling
+* Vite for build tooling and development server
+* PWA capabilities with service workers for offline functionality
+
+**Back-End:**
+
+* Supabase for authentication, PostgreSQL database, and real-time subscriptions
+* Supabase Storage for media files and offline content
+* Row Level Security (RLS) for user data protection
+
+**AI Integration:**
+
+* OpenAI GPT-4o for lesson content generation, quiz creation, and "Explain Like I'm 5" mode
+* Custom prompts for educational content optimization
+
+**APIs & Integrations:**
+
+* Web Push API for notifications
+* Web App Manifest for PWA installation
+* Service Worker API for offline caching
+* Local Storage API for user preferences
+
+**Additional Requirements:**
+
+* Responsive design for mobile-first experience
+* Touch gestures for flashcard interactions
+* Progressive loading for smooth user experience
+
+## 4\. Design Preferences
+
+**Interface:** Clean, modern, and intuitive design with card-based layouts and smooth animations that encourage daily engagement and make learning feel effortless and enjoyable.
+
+**Color Palette:**
+
+* Primary: #6366F1 (Indigo) - for main actions and branding
+* Secondary: #F8FAFC (Slate Gray) - for backgrounds and subtle elements
+* Accent: #10B981 (Emerald) - for progress indicators and success states
+
+**Typography:**
+
+* Headings: Inter (bold, modern, highly readable)
+* Body Text: Inter (regular, optimized for mobile reading)
+
+**Additional Design Considerations:**
+
+* Card-based UI components for lessons and flashcards
+* Subtle animations and micro-interactions
+* High contrast for accessibility
+* Touch-friendly button sizes (minimum 44px)
+
+## 5\. All Screens/Pages
+
+### `/` \- Home Screen
+
+**Route:** `/`
+**UI Elements:**
+
+* Welcome header with user greeting
+* Current learning streak counter
+* "Start Today's Lesson" prominent CTA button
+* Quick stats cards (lessons completed, streak days, badges earned)
+* Recently studied topics carousel
+* Continue learning section with progress bars
+    **Navigation:**
+* Enter: App launch or navigation from any screen
+* Exit: Bottom navigation to other main sections
+
+### `/onboarding` \- Welcome & Setup Flow
+
+**Route:** `/onboarding`
+**UI Elements:**
+
+* Multi-step carousel with app introduction
+* Learning goals selection (career, hobby, academic)
+* Topic preference selection with category chips
+* Notification permission request
+* Daily reminder time picker
+* Difficulty level preference slider
+    **Navigation:**
+* Enter: First app launch or from settings
+* Exit: Completes to home screen
+
+### `/topics` \- Topic Selection
+
+**Route:** `/topics`
+**UI Elements:**
+
+* Search bar with real-time filtering
+* Category filter tabs (Business, Science, Arts, Technology, etc.)
+* Topic cards with difficulty indicators and estimated completion time
+* "Coming Soon" placeholder cards
+* Topic preview modal with sample lesson content
+    **Navigation:**
+* Enter: Bottom navigation or from home screen
+* Exit: Select topic to lesson plan, or back to home
+
+### `/lesson/:topicId/:lessonId` \- Daily Lesson View
+
+**Route:** `/lesson/:topicId/:lessonId`
+**UI Elements:**
+
+* Progress indicator at top
+* Lesson title and estimated read time
+* AI-generated lesson content with formatted text
+* "Explain Like I'm 5" toggle switch
+* Audio playback controls (text-to-speech)
+* Lesson completion button
+* Next lesson preview card
+    **Navigation:**
+* Enter: From home, topic selection, or lesson history
+* Exit: Complete lesson to flashcards, or back button
+
+### `/flashcards/:topicId` \- Interactive Flashcards
+
+**Route:** `/flashcards/:topicId`
+**UI Elements:**
+
+* Swipeable card interface
+* Card flip animation on tap
+* Progress dots indicator
+* "Know it" and "Study more" action buttons
+* Session completion summary
+* Restart session option
+    **Navigation:**
+* Enter: After lesson completion or from topic dashboard
+* Exit: Complete session to quiz or back to topic
+
+### `/quiz/:topicId` \- Quick Quiz
+
+**Route:** `/quiz/:topicId`
+**UI Elements:**
+
+* Question counter and timer
+* Multiple choice question cards
+* Answer selection with immediate feedback
+* Explanation popup for incorrect answers
+* Quiz results summary with score
+* Retry quiz option
+    **Navigation:**
+* Enter: After flashcard session or from topic dashboard
+* Exit: Complete quiz to progress screen or back to topic
+
+### `/progress` \- Learning Analytics
+
+**Route:** `/progress`
+**UI Elements:**
+
+* Weekly/monthly progress charts
+* Learning streak calendar
+* Achievement badges grid
+* Topic completion percentages
+* Study time statistics
+* Personal learning insights
+    **Navigation:**
+* Enter: Bottom navigation
+* Exit: Back to home or other navigation options
+
+### `/profile` \- User Profile & Settings
+
+**Route:** `/profile`
+**UI Elements:**
+
+* Profile avatar and user info
+* Learning preferences toggles
+* Notification settings
+* Daily reminder time picker
+* App theme selection
+* Account management options
+* Help and support links
+    **Navigation:**
+* Enter: Bottom navigation or settings icon
+* Exit: Back to previous screen via navigation
+
+### `/topic-dashboard/:topicId` \- Individual Topic Progress
+
+**Route:** `/topic-dashboard/:topicId`
+**UI Elements:**
+
+* Topic header with progress percentage
+* Lesson list with completion status
+* Study materials quick access
+* Topic-specific achievement badges
+* Estimated completion timeline
+* Review mode access buttons
+    **Navigation:**
+* Enter: From topics list or lesson completion
+* Exit: To specific lessons or back to topics
+
+### `/achievements` \- Badges & Milestones
+
+**Route:** `/achievements`
+**UI Elements:**
+
+* Achievement categories tabs
+* Unlocked badges gallery
+* Progress toward locked badges
+* Badge descriptions and unlock conditions
+* Social sharing options
+* Leaderboard preview
+    **Navigation:**
+* Enter: From progress screen or profile
+* Exit: Back to progress or home
+
+### `/offline` \- Offline Content Manager
+
+**Route:** `/offline`
+**UI Elements:**
+
+* Downloaded content list
+* Storage usage indicator
+* Download management controls
+* Sync status indicators
+* Content cleanup options
+    **Navigation:**
+* Enter: From settings or automatic when offline
+* Exit: Back to main app sections
+
+## 6\. App Menu and Navigation Structure
+
+**Primary Navigation:** Bottom Tab Bar (PWA optimized)
+
+* Home (house icon) - `/`
+* Topics (book icon) - `/topics`
+* Progress (chart icon) - `/progress`
+* Profile (user icon) - `/profile`
+
+**Secondary Navigation:**
+
+* Header-based back buttons for deep screens
+* Contextual action buttons within screens
+* Swipe gestures for flashcard navigation
+* Pull-to-refresh on main screens
+
+**Navigation Hierarchy:**
+
+```
+Home
+├── Today's Lesson → Flashcards → Quiz → Progress Summary
+└── Recent Topics → Topic Dashboard → Lesson
+
+Topics
+├── Category Filter → Topic Selection → Topic Dashboard
+└── Search → Filtered Results → Topic Dashboard
+
+Progress
+├── Statistics Overview
+├── Achievement Gallery
+└── Learning Insights
+
+Profile
+├── Settings & Preferences
+├── Account Management
+└── Help & Support
+```
+
+## 7\. User Flow
+
+1. **First Launch & Onboarding**
+    * User opens LearnBite PWA
+    * Onboarding screens introduce app concept
+    * User selects learning goals and preferred topics
+    * Sets daily reminder preferences
+    * Completes onboarding and lands on home screen
+2. **Daily Learning Session**
+    * User opens app and sees home screen with today's lesson
+    * Taps "Start Today's Lesson" button
+    * Reads 5-minute AI-generated lesson content
+    * Can toggle "Explain Like I'm 5" mode for simpler explanation
+    * Marks lesson as complete
+    * Proceeds to interactive flashcard review
+    * Swipes through flashcards, marking knowledge level
+    * Takes quick quiz with adaptive questions
+    * Views session completion summary and progress update
+3. **Exploring New Topics**
+    * User navigates to Topics tab
+    * Browses categories or uses search
+    * Previews topic content and difficulty
+    * Enrolls in new topic
+    * Views topic dashboard with lesson roadmap
+    * Starts first lesson in the topic
+4. **Progress Tracking & Motivation**
+    * User checks Progress tab to view learning analytics
+    * Reviews streak calendar and achievement badges
+    * Sets new learning goals based on insights
+    * Shares achievements or competes with friends
+5. **Profile Management**
+    * User accesses Profile tab for settings
+    * Adjusts notification preferences
+    * Updates learning goals and difficulty preferences
+    * Manages offline content downloads
+    * Accesses help and support resources
+
+
+this is plan
