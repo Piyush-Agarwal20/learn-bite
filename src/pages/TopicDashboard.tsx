@@ -2,7 +2,8 @@ import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { PageContainer, Card, ProgressBar, LoadingSpinner, Button } from '../components';
 import { getTopicById, getLessonsByTopicId } from '../services/api';
-import type { Topic, Lesson } from '../types';
+import { getTopicProgress, getUserProgress } from '../services/api/progress';
+import type { Topic, Lesson, UserProgress } from '../types';
 
 const TopicDashboard = () => {
   const { topicId } = useParams<{ topicId: string }>();
@@ -11,6 +12,8 @@ const TopicDashboard = () => {
   const [lessons, setLessons] = useState<Lesson[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [topicProgressData, setTopicProgressData] = useState<{ total: number; completed: number; percentage: number } | null>(null);
+  const [userProgressMap, setUserProgressMap] = useState<Map<string, UserProgress>>(new Map());
 
   useEffect(() => {
     async function fetchData() {
@@ -19,10 +22,12 @@ const TopicDashboard = () => {
       setLoading(true);
       setError(null);
 
-      // Fetch topic and lessons in parallel
-      const [topicResult, lessonsResult] = await Promise.all([
+      // Fetch topic, lessons, and progress in parallel
+      const [topicResult, lessonsResult, progressResult, userProgressResult] = await Promise.all([
         getTopicById(topicId),
         getLessonsByTopicId(topicId),
+        getTopicProgress(topicId),
+        getUserProgress(),
       ]);
 
       if (topicResult.error) {
@@ -37,6 +42,18 @@ const TopicDashboard = () => {
         console.error(lessonsResult.error);
       } else if (lessonsResult.data) {
         setLessons(lessonsResult.data);
+      }
+
+      if (progressResult.data) {
+        setTopicProgressData(progressResult.data);
+      }
+
+      if (userProgressResult.data) {
+        const progressMap = new Map<string, UserProgress>();
+        userProgressResult.data.forEach((progress) => {
+          progressMap.set(progress.lesson_id, progress);
+        });
+        setUserProgressMap(progressMap);
       }
 
       setLoading(false);
@@ -144,10 +161,12 @@ const TopicDashboard = () => {
           <h2 className="text-xl font-bold text-secondary-900 mb-4">Your Progress</h2>
           <div className="space-y-2">
             <div className="flex justify-between text-sm">
-              <span className="text-secondary-600">0 of {lessons.length} lessons completed</span>
-              <span className="text-secondary-900 font-semibold">0%</span>
+              <span className="text-secondary-600">
+                {topicProgressData?.completed || 0} of {topicProgressData?.total || lessons.length} lessons completed
+              </span>
+              <span className="text-secondary-900 font-semibold">{topicProgressData?.percentage || 0}%</span>
             </div>
-            <ProgressBar progress={0} />
+            <ProgressBar progress={topicProgressData?.percentage || 0} />
           </div>
         </Card>
 
@@ -191,7 +210,15 @@ const TopicDashboard = () => {
 
                     {/* Status Icon */}
                     <div className="flex-shrink-0">
-                      <div className="w-6 h-6 rounded-full border-2 border-secondary-300" />
+                      {userProgressMap.get(lesson.id)?.completed ? (
+                        <div className="w-6 h-6 rounded-full bg-green-500 flex items-center justify-center">
+                          <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                          </svg>
+                        </div>
+                      ) : (
+                        <div className="w-6 h-6 rounded-full border-2 border-secondary-300" />
+                      )}
                     </div>
                   </div>
                 </Card>

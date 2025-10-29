@@ -1,16 +1,44 @@
-import { Button, Card, ProgressBar, PageContainer } from '../components';
+import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { Button, Card, ProgressBar, PageContainer, LoadingSpinner } from '../components';
+import { useAuth } from '../contexts/AuthContext';
+import { getUserStats } from '../services/api/progress';
+import type { UserStats } from '../types';
 
 const Home = () => {
-  const userName = 'Alex'; // TODO: Get from auth context
-  const currentStreak = 7;
-  const lessonsCompleted = 24;
-  const badgesEarned = 5;
+  const navigate = useNavigate();
+  const { user } = useAuth();
+  const [stats, setStats] = useState<UserStats | null>(null);
+  const [loading, setLoading] = useState(true);
 
-  const recentTopics = [
-    { id: 1, title: 'Python Basics', progress: 65, color: 'primary' as const },
-    { id: 2, title: 'Marketing 101', progress: 45, color: 'accent' as const },
-    { id: 3, title: 'Quantum Physics', progress: 30, color: 'secondary' as const },
-  ];
+  useEffect(() => {
+    async function fetchStats() {
+      setLoading(true);
+      const { data, error } = await getUserStats();
+
+      if (!error && data) {
+        setStats(data);
+      }
+      setLoading(false);
+    }
+
+    fetchStats();
+  }, []);
+
+  const userName = user?.user_metadata?.name || 'there';
+  const currentStreak = stats?.currentStreak || 0;
+  const lessonsCompleted = stats?.completedLessons || 0;
+  const badgesEarned = 0; // TODO: Implement badges system
+
+  if (loading) {
+    return (
+      <PageContainer>
+        <div className="flex justify-center items-center py-12">
+          <LoadingSpinner size="lg" />
+        </div>
+      </PageContainer>
+    );
+  }
 
   return (
     <PageContainer>
@@ -20,7 +48,7 @@ const Home = () => {
           <h1 className="text-3xl font-bold text-secondary-900">
             Welcome back, {userName}! 👋
           </h1>
-          <p className="text-secondary-600 mt-1">Ready for today's lesson?</p>
+          <p className="text-secondary-600 mt-1">Ready to learn something new?</p>
         </div>
 
         {/* Streak Counter - Prominent */}
@@ -33,23 +61,6 @@ const Home = () => {
             </div>
             <div className="text-6xl opacity-20">📚</div>
           </div>
-        </Card>
-
-        {/* Today's Lesson CTA */}
-        <Card variant="elevated" padding="lg">
-          <div className="flex items-center justify-between mb-4">
-            <div>
-              <h2 className="text-xl font-bold text-secondary-900">Today's Lesson</h2>
-              <p className="text-secondary-600 text-sm mt-1">Python Basics • 5 min read</p>
-            </div>
-            <div className="text-4xl">🐍</div>
-          </div>
-          <p className="text-secondary-700 mb-4">
-            Learn about functions and parameters in Python
-          </p>
-          <Button variant="primary" size="lg" fullWidth>
-            Start Learning →
-          </Button>
         </Card>
 
         {/* Quick Stats */}
@@ -68,33 +79,15 @@ const Home = () => {
           </Card>
         </div>
 
-        {/* Continue Learning */}
-        <div>
-          <h2 className="text-xl font-bold text-secondary-900 mb-4">Continue Learning</h2>
-          <div className="space-y-3">
-            {recentTopics.map((topic) => (
-              <Card key={topic.id} hoverable clickable padding="md">
-                <div className="flex items-center justify-between mb-2">
-                  <h3 className="font-semibold text-secondary-900">{topic.title}</h3>
-                  <span className="text-sm font-medium text-secondary-600">
-                    {topic.progress}%
-                  </span>
-                </div>
-                <ProgressBar progress={topic.progress} color={topic.color} size="sm" />
-              </Card>
-            ))}
-          </div>
-        </div>
-
         {/* Quick Actions */}
         <div className="grid grid-cols-2 gap-3 pb-4">
-          <Card hoverable clickable padding="md" className="text-center">
+          <Card hoverable clickable padding="md" className="text-center" onClick={() => navigate('/topics')}>
             <div className="text-3xl mb-2">📖</div>
             <p className="font-semibold text-secondary-900">Browse Topics</p>
           </Card>
-          <Card hoverable clickable padding="md" className="text-center">
-            <div className="text-3xl mb-2">🎯</div>
-            <p className="font-semibold text-secondary-900">Practice Quiz</p>
+          <Card hoverable clickable padding="md" className="text-center" onClick={() => navigate('/progress')}>
+            <div className="text-3xl mb-2">📊</div>
+            <p className="font-semibold text-secondary-900">View Progress</p>
           </Card>
         </div>
       </div>

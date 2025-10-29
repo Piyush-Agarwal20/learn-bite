@@ -1,13 +1,35 @@
-import { Card, ProgressBar, PageContainer } from '../components';
+import { useState, useEffect } from 'react';
+import { Card, ProgressBar, PageContainer, LoadingSpinner } from '../components';
+import { getUserStats } from '../services/api/progress';
+import type { UserStats } from '../types';
 
 const Progress = () => {
-  const stats = {
-    totalLessons: 24,
-    currentStreak: 7,
-    longestStreak: 12,
-    totalTime: 180, // minutes
-    badgesEarned: 5,
-  };
+  const [stats, setStats] = useState<UserStats | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function fetchStats() {
+      setLoading(true);
+      const { data, error } = await getUserStats();
+
+      if (!error && data) {
+        setStats(data);
+      }
+      setLoading(false);
+    }
+
+    fetchStats();
+  }, []);
+
+  if (loading) {
+    return (
+      <PageContainer>
+        <div className="flex justify-center items-center py-12">
+          <LoadingSpinner size="lg" />
+        </div>
+      </PageContainer>
+    );
+  }
 
   const topicProgress = [
     { name: 'Python Programming', progress: 65, lessons: '15/24', color: 'primary' as const },
@@ -47,20 +69,20 @@ const Progress = () => {
         <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
           <Card padding="md" variant="elevated" className="text-center">
             <div className="text-3xl mb-2">📚</div>
-            <p className="text-2xl font-bold text-primary-600">{stats.totalLessons}</p>
+            <p className="text-2xl font-bold text-primary-600">{stats?.completedLessons || 0}</p>
             <p className="text-xs text-secondary-600 mt-1">Lessons Completed</p>
           </Card>
 
           <Card padding="md" variant="elevated" className="text-center">
             <div className="text-3xl mb-2">🔥</div>
-            <p className="text-2xl font-bold text-accent-600">{stats.currentStreak}</p>
+            <p className="text-2xl font-bold text-accent-600">{stats?.currentStreak || 0}</p>
             <p className="text-xs text-secondary-600 mt-1">Current Streak</p>
           </Card>
 
           <Card padding="md" variant="elevated" className="text-center">
-            <div className="text-3xl mb-2">⏱️</div>
-            <p className="text-2xl font-bold text-secondary-600">{stats.totalTime}</p>
-            <p className="text-xs text-secondary-600 mt-1">Minutes Learned</p>
+            <div className="text-3xl mb-2">📊</div>
+            <p className="text-2xl font-bold text-secondary-600">{stats?.progressPercentage || 0}%</p>
+            <p className="text-xs text-secondary-600 mt-1">Overall Progress</p>
           </Card>
         </div>
 
@@ -125,7 +147,7 @@ const Progress = () => {
             <div className="text-6xl mb-4">📅</div>
             <p className="text-secondary-600">Calendar view coming soon!</p>
             <p className="text-sm text-secondary-500 mt-2">
-              Longest streak: {stats.longestStreak} days
+              Current streak: {stats?.currentStreak || 0} days
             </p>
           </div>
         </Card>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>API Test</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+    <h1>Testing Supabase Connection</h1>
+    <div id="results"></div>
+
+    <script>
+        const SUPABASE_URL = 'https://rvmgfwdqjnmwixxjqcrz.supabase.co';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJ2bWdmd2Rxam5td2l4eGpxY3J6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjEyMTYwNzYsImV4cCI6MjA3Njc5MjA3Nn0.CLHDKkXeRCGIzZilwPG_8XHjqxyttuJldWv4ohRiVHE';
+
+        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+        async function testConnection() {
+            const results = document.getElementById('results');
+            results.innerHTML = '<p>Testing...</p>';
+
+            try {
+                // Test 1: Fetch topics
+                const { data: topics, error: topicsError } = await supabase
+                    .from('topics')
+                    .select('*')
+                    .limit(5);
+
+                if (topicsError) {
+                    results.innerHTML += `<p style="color: red;">❌ Topics Error: ${topicsError.message}</p>`;
+                } else {
+                    results.innerHTML += `<p style="color: green;">✅ Topics: ${topics.length} found</p>`;
+                    results.innerHTML += `<pre>${JSON.stringify(topics, null, 2)}</pre>`;
+                }
+
+                // Test 2: Fetch lessons
+                const { data: lessons, error: lessonsError } = await supabase
+                    .from('lessons')
+                    .select('*')
+                    .limit(5);
+
+                if (lessonsError) {
+                    results.innerHTML += `<p style="color: red;">❌ Lessons Error: ${lessonsError.message}</p>`;
+                } else {
+                    results.innerHTML += `<p style="color: green;">✅ Lessons: ${lessons.length} found</p>`;
+                }
+
+                // Test 3: Check auth session
+                const { data: { session } } = await supabase.auth.getSession();
+                if (session) {
+                    results.innerHTML += `<p style="color: green;">✅ Auth: Logged in as ${session.user.email}</p>`;
+                } else {
+                    results.innerHTML += `<p style="color: orange;">⚠️ Auth: Not logged in</p>`;
+                }
+
+            } catch (err) {
+                results.innerHTML += `<p style="color: red;">❌ Error: ${err.message}</p>`;
+            }
+        }
+
+        testConnection();
+    </script>
+</body>
+</html>

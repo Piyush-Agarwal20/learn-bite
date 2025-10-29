@@ -12,3 +12,12 @@ export {
   getLessonById,
   getLessonsWithProgress,
 } from './lessons';
+
+// Progress API
+export {
+  markLessonComplete,
+  getLessonProgress,
+  getUserProgress,
+  getUserStats,
+  getTopicProgress,
+} from './progress';

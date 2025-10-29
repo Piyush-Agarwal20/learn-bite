@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { ChevronLeft, Clock, BookOpen, Lightbulb } from 'lucide-react';
+import { ChevronLeft, Clock, BookOpen, Lightbulb, CheckCircle } from 'lucide-react';
 import { getLessonById } from '../services/api/lessons';
+import { markLessonComplete } from '../services/api/progress';
 import type { Lesson } from '../types';
 import Button from '../components/Button';
 import LoadingSpinner from '../components/LoadingSpinner';
@@ -11,6 +12,7 @@ const LessonView = () => {
   const navigate = useNavigate();
   const [lesson, setLesson] = useState<Lesson | null>(null);
   const [loading, setLoading] = useState(true);
+  const [completing, setCompleting] = useState(false);
   const [showSimpleExplanation, setShowSimpleExplanation] = useState(false);
 
   useEffect(() => {
@@ -29,9 +31,21 @@ const LessonView = () => {
     fetchLesson();
   }, [lessonId]);
 
-  const handleComplete = () => {
-    // TODO: Mark lesson as complete and update progress
-    // For now, just navigate back
+  const handleComplete = async () => {
+    if (!lessonId) return;
+
+    setCompleting(true);
+    const { error } = await markLessonComplete(lessonId);
+
+    if (error) {
+      console.error('Error marking lesson complete:', error);
+      alert('Failed to mark lesson as complete. Please try again.');
+      setCompleting(false);
+      return;
+    }
+
+    // Show success and navigate back
+    setCompleting(false);
     if (topicId) {
       navigate(`/topics/${topicId}`);
     }
@@ -98,7 +112,7 @@ const LessonView = () => {
       </div>
 
       {/* Content */}
-      <div className="max-w-4xl mx-auto px-4 py-8 pb-32">
+      <div className="max-w-4xl mx-auto px-4 py-8 pb-40">
         {/* Title */}
         <h1 className="text-3xl font-bold text-gray-900 mb-6">
           {lesson.title}
@@ -171,20 +185,24 @@ const LessonView = () => {
       </div>
 
       {/* Bottom Actions */}
-      <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 p-4 pb-6 safe-bottom">
+      <div className="fixed bottom-16 left-0 right-0 bg-white border-t border-gray-200 p-4 shadow-lg z-40">
         <div className="max-w-4xl mx-auto flex gap-3">
           <Button
             variant="secondary"
             onClick={() => navigate(`/topics/${topicId}`)}
             className="flex-1"
+            disabled={completing}
           >
-            Save Progress
+            Back to Topic
           </Button>
           <Button
             onClick={handleComplete}
-            className="flex-1"
+            className="flex-1 flex items-center justify-center gap-2"
+            loading={completing}
+            disabled={completing}
           >
-            Complete Lesson
+            <CheckCircle className="w-5 h-5" />
+            {completing ? 'Completing...' : 'Complete Lesson'}
           </Button>
         </div>
       </div>

@@ -60,11 +60,20 @@ export interface Quiz {
 
 // Progress types
 export interface UserProgress {
+  id?: string;
   user_id: string;
   lesson_id: string;
   completed: boolean;
   completion_date?: string;
-  time_spent: number;
+  time_spent?: number;
+  created_at?: string;
+}
+
+export interface UserStats {
+  completedLessons: number;
+  totalLessons: number;
+  currentStreak: number;
+  progressPercentage: number;
 }
 
 // Achievement types
