@@ -1,6 +1,9 @@
+export { default as Landing } from './Landing';
 export { default as Login } from './Login';
 export { default as Signup } from './Signup';
 export { default as Home } from './Home';
 export { default as Topics } from './Topics';
+export { default as TopicDashboard } from './TopicDashboard';
+export { default as LessonView } from './LessonView';
 export { default as Progress } from './Progress';
 export { default as Profile } from './Profile';

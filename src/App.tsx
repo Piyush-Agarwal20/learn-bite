@@ -3,7 +3,9 @@ import { BrowserRouter, Routes, Route, useNavigate, useLocation, Navigate } from
 import './App.css';
 import { MainLayout } from './components';
 import type { NavItem } from './components';
-import { Login, Signup, Home, Topics, Progress, Profile } from './pages';
+import { Landing, Login, Signup, Home, Topics, TopicDashboard, Progress, Profile, LessonView } from './pages';
+import { AuthProvider, useAuth } from './contexts/AuthContext';
+import LoadingSpinner from './components/LoadingSpinner';
 
 // Main App Layout Component
 function AppLayout() {
@@ -106,6 +108,8 @@ function AppLayout() {
       <Routes>
         <Route path="/home" element={<Home />} />
         <Route path="/topics" element={<Topics />} />
+        <Route path="/topics/:topicId" element={<TopicDashboard />} />
+        <Route path="/lesson/:topicId/:lessonId" element={<LessonView />} />
         <Route path="/progress" element={<Progress />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="*" element={<Navigate to="/home" replace />} />
@@ -114,15 +118,37 @@ function AppLayout() {
   );
 }
 
+// Protected App Layout
+function ProtectedAppLayout() {
+  const { user, loading } = useAuth();
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gray-50">
+        <LoadingSpinner size="lg" />
+      </div>
+    );
+  }
+
+  if (!user) {
+    return <Navigate to="/login" replace />;
+  }
+
+  return <AppLayout />;
+}
+
 // Main App Component with Router
 function App() {
   return (
     <BrowserRouter>
-      <Routes>
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
-        <Route path="/*" element={<AppLayout />} />
-      </Routes>
+      <AuthProvider>
+        <Routes>
+          <Route path="/" element={<Landing />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/*" element={<ProtectedAppLayout />} />
+        </Routes>
+      </AuthProvider>
     </BrowserRouter>
   );
 }

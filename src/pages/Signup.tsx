@@ -1,33 +1,49 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Button, Input, Card } from '../components';
+import { useAuth } from '../contexts/AuthContext';
 
 const Signup = () => {
   const navigate = useNavigate();
+  const { signUp } = useAuth();
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [success, setSuccess] = useState(false);
 
   const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
+    setSuccess(false);
 
     if (password !== confirmPassword) {
       setError('Passwords do not match');
       return;
     }
 
+    if (password.length < 8) {
+      setError('Password must be at least 8 characters');
+      return;
+    }
+
     setLoading(true);
 
-    // TODO: Implement Supabase authentication
-    // For now, navigate to onboarding
-    setTimeout(() => {
+    const { error: signUpError } = await signUp(email, password, name);
+
+    if (signUpError) {
+      setError(signUpError.message || 'Failed to create account');
       setLoading(false);
-      navigate('/home');
-    }, 1000);
+    } else {
+      setSuccess(true);
+      setLoading(false);
+      // Auto-login after successful signup
+      setTimeout(() => {
+        navigate('/home');
+      }, 1500);
+    }
   };
 
   return (
@@ -78,8 +94,19 @@ const Signup = () => {
             onChange={(e) => setConfirmPassword(e.target.value)}
             fullWidth
             required
-            error={error}
           />
+
+          {error && (
+            <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded">
+              {error}
+            </div>
+          )}
+
+          {success && (
+            <div className="bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded">
+              Account created successfully! Redirecting...
+            </div>
+          )}
 
           <Button type="submit" variant="primary" fullWidth loading={loading}>
             Create Account

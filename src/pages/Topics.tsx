@@ -1,97 +1,52 @@
-import { useState } from 'react';
-import { Card, SearchInput, PageContainer } from '../components';
-
-interface Topic {
-  id: number;
-  title: string;
-  category: string;
-  difficulty: 'Beginner' | 'Intermediate' | 'Advanced';
-  lessons: number;
-  time: string;
-  icon: string;
-}
+import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { SearchInput, PageContainer, TopicCard, LoadingSpinner } from '../components';
+import { getTopics, getTopicCategories } from '../services/api';
+import type { Topic } from '../types';
 
 const Topics = () => {
+  const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All');
+  const [topics, setTopics] = useState<Topic[]>([]);
+  const [categories, setCategories] = useState<string[]>(['All']);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-  const categories = ['All', 'Business', 'Technology', 'Science', 'Arts', 'Languages'];
-
-  const allTopics: Topic[] = [
-    {
-      id: 1,
-      title: 'Python Programming',
-      category: 'Technology',
-      difficulty: 'Beginner',
-      lessons: 24,
-      time: '3 weeks',
-      icon: '🐍',
-    },
-    {
-      id: 2,
-      title: 'Digital Marketing',
-      category: 'Business',
-      difficulty: 'Beginner',
-      lessons: 18,
-      time: '2 weeks',
-      icon: '📱',
-    },
-    {
-      id: 3,
-      title: 'Quantum Physics',
-      category: 'Science',
-      difficulty: 'Advanced',
-      lessons: 32,
-      time: '5 weeks',
-      icon: '⚛️',
-    },
-    {
-      id: 4,
-      title: 'UI/UX Design',
-      category: 'Technology',
-      difficulty: 'Intermediate',
-      lessons: 20,
-      time: '3 weeks',
-      icon: '🎨',
-    },
-    {
-      id: 5,
-      title: 'Spanish Basics',
-      category: 'Languages',
-      difficulty: 'Beginner',
-      lessons: 15,
-      time: '2 weeks',
-      icon: '🇪🇸',
-    },
-    {
-      id: 6,
-      title: 'Psychology 101',
-      category: 'Science',
-      difficulty: 'Beginner',
-      lessons: 22,
-      time: '3 weeks',
-      icon: '🧠',
-    },
-  ];
-
-  const filteredTopics = allTopics.filter((topic) => {
-    const matchesSearch = topic.title.toLowerCase().includes(searchQuery.toLowerCase());
-    const matchesCategory = selectedCategory === 'All' || topic.category === selectedCategory;
-    return matchesSearch && matchesCategory;
-  });
-
-  const getDifficultyColor = (difficulty: string) => {
-    switch (difficulty) {
-      case 'Beginner':
-        return 'text-accent-600 bg-accent-50';
-      case 'Intermediate':
-        return 'text-primary-600 bg-primary-50';
-      case 'Advanced':
-        return 'text-red-600 bg-red-50';
-      default:
-        return 'text-secondary-600 bg-secondary-50';
+  // Fetch categories on mount
+  useEffect(() => {
+    async function fetchCategories() {
+      const { data } = await getTopicCategories();
+      if (data) {
+        setCategories(data);
+      }
     }
-  };
+    fetchCategories();
+  }, []);
+
+  // Fetch topics based on filters
+  useEffect(() => {
+    async function fetchTopics() {
+      setLoading(true);
+      setError(null);
+
+      const { data, error: fetchError } = await getTopics({
+        category: selectedCategory !== 'All' ? selectedCategory : undefined,
+        searchQuery: searchQuery || undefined,
+      });
+
+      if (fetchError) {
+        setError('Failed to load topics. Please try again.');
+        console.error(fetchError);
+      } else if (data) {
+        setTopics(data);
+      }
+
+      setLoading(false);
+    }
+
+    fetchTopics();
+  }, [selectedCategory, searchQuery]);
 
   return (
     <PageContainer>
@@ -128,35 +83,47 @@ const Topics = () => {
           ))}
         </div>
 
-        {/* Topics Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pb-4">
-          {filteredTopics.map((topic) => (
-            <Card key={topic.id} hoverable clickable padding="lg">
-              <div className="flex items-start gap-4">
-                <div className="text-5xl">{topic.icon}</div>
-                <div className="flex-1">
-                  <h3 className="font-bold text-lg text-secondary-900 mb-1">{topic.title}</h3>
-                  <div className="flex items-center gap-2 mb-3">
-                    <span
-                      className={`text-xs font-semibold px-2 py-1 rounded ${getDifficultyColor(
-                        topic.difficulty
-                      )}`}
-                    >
-                      {topic.difficulty}
-                    </span>
-                    <span className="text-xs text-secondary-500">{topic.category}</span>
-                  </div>
-                  <div className="flex items-center gap-4 text-sm text-secondary-600">
-                    <span>📚 {topic.lessons} lessons</span>
-                    <span>⏱️ {topic.time}</span>
-                  </div>
-                </div>
-              </div>
-            </Card>
-          ))}
-        </div>
+        {/* Loading State */}
+        {loading && (
+          <div className="flex justify-center items-center py-12">
+            <LoadingSpinner size="lg" />
+          </div>
+        )}
 
-        {filteredTopics.length === 0 && (
+        {/* Error State */}
+        {error && !loading && (
+          <div className="text-center py-12">
+            <div className="text-6xl mb-4">⚠️</div>
+            <p className="text-lg text-red-600 mb-2">{error}</p>
+            <button
+              onClick={() => window.location.reload()}
+              className="text-primary-600 hover:text-primary-700 font-medium"
+            >
+              Try again
+            </button>
+          </div>
+        )}
+
+        {/* Topics Grid */}
+        {!loading && !error && (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pb-4">
+            {topics.map((topic) => (
+              <TopicCard
+                key={topic.id}
+                icon={topic.icon}
+                title={topic.title}
+                category={topic.category}
+                difficulty={topic.difficulty}
+                description={topic.description}
+                estimatedTime={topic.estimated_time}
+                onClick={() => navigate(`/topics/${topic.id}`)}
+              />
+            ))}
+          </div>
+        )}
+
+        {/* Empty State */}
+        {!loading && !error && topics.length === 0 && (
           <div className="text-center py-12">
             <div className="text-6xl mb-4">🔍</div>
             <p className="text-lg text-secondary-600">No topics found</p>

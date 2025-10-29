@@ -14,7 +14,16 @@ export interface Topic {
   category: string;
   difficulty: 'beginner' | 'intermediate' | 'advanced';
   description: string;
-  estimated_time: number;
+  estimated_time: number; // in minutes
+  icon: string;
+  created_at?: string;
+}
+
+// Topic with progress info
+export interface TopicWithProgress extends Topic {
+  total_lessons: number;
+  completed_lessons: number;
+  progress_percentage: number;
 }
 
 // Lesson types
@@ -23,8 +32,12 @@ export interface Lesson {
   topic_id: string;
   title: string;
   content: string;
+  content_eli5?: string; // Simple explanation
   order: number;
+  order_index?: number; // Alias for order
   estimated_read_time: number;
+  estimated_time?: number; // Alias for estimated_read_time
+  created_at?: string;
 }
 
 // Flashcard types

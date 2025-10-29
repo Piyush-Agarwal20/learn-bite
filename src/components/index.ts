@@ -29,3 +29,6 @@ export type { MainLayoutProps } from './MainLayout';
 
 export { default as BottomNav } from './BottomNav';
 export type { BottomNavProps, NavItem } from './BottomNav';
+
+export { default as TopicCard } from './TopicCard';
+export { default as ProtectedRoute } from './ProtectedRoute';

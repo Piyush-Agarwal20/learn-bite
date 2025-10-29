@@ -1,17 +1,26 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Card, Button, Input, PageContainer } from '../components';
+import { useAuth } from '../contexts/AuthContext';
 
 const Profile = () => {
   const navigate = useNavigate();
-  const [name, setName] = useState('Alex Johnson');
-  const [email, setEmail] = useState('alex@example.com');
+  const { user, signOut } = useAuth();
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
   const [notifications, setNotifications] = useState(true);
   const [dailyReminder, setDailyReminder] = useState(true);
   const [reminderTime, setReminderTime] = useState('09:00');
 
-  const handleLogout = () => {
-    // TODO: Implement logout with Supabase
+  useEffect(() => {
+    if (user) {
+      setEmail(user.email || '');
+      setName(user.user_metadata?.name || '');
+    }
+  }, [user]);
+
+  const handleLogout = async () => {
+    await signOut();
     navigate('/login');
   };
 

@@ -1,9 +1,11 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Button, Input, Card } from '../components';
+import { useAuth } from '../contexts/AuthContext';
 
 const Login = () => {
   const navigate = useNavigate();
+  const { signIn } = useAuth();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
@@ -14,12 +16,15 @@ const Login = () => {
     setError('');
     setLoading(true);
 
-    // TODO: Implement Supabase authentication
-    // For now, just navigate to home after a delay
-    setTimeout(() => {
+    const { error: signInError } = await signIn(email, password);
+
+    if (signInError) {
+      setError(signInError.message || 'Invalid email or password');
       setLoading(false);
+    } else {
+      // Navigation will be handled by auth state change
       navigate('/home');
-    }, 1000);
+    }
   };
 
   return (
