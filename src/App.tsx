@@ -3,7 +3,7 @@ import { BrowserRouter, Routes, Route, useNavigate, useLocation, Navigate } from
 import './App.css';
 import { MainLayout } from './components';
 import type { NavItem } from './components';
-import { Landing, Login, Signup, Home, Topics, TopicDashboard, Progress, Profile, LessonView } from './pages';
+import { Landing, Login, Signup, Home, Topics, TopicDashboard, Progress, Profile, LessonView, Flashcards } from './pages';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
 import LoadingSpinner from './components/LoadingSpinner';
 
@@ -110,6 +110,7 @@ function AppLayout() {
         <Route path="/topics" element={<Topics />} />
         <Route path="/topics/:topicId" element={<TopicDashboard />} />
         <Route path="/lesson/:topicId/:lessonId" element={<LessonView />} />
+        <Route path="/flashcards/:lessonId" element={<Flashcards />} />
         <Route path="/progress" element={<Progress />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="*" element={<Navigate to="/home" replace />} />

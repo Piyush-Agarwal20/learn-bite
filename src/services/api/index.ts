@@ -21,3 +21,9 @@ export {
   getUserStats,
   getTopicProgress,
 } from './progress';
+
+// Flashcards API
+export {
+  getFlashcardsByLessonId,
+  getFlashcardById,
+} from './flashcards';

@@ -186,23 +186,33 @@ const LessonView = () => {
 
       {/* Bottom Actions */}
       <div className="fixed bottom-16 left-0 right-0 bg-white border-t border-gray-200 p-4 shadow-lg z-40">
-        <div className="max-w-4xl mx-auto flex gap-3">
+        <div className="max-w-4xl mx-auto">
+          <div className="flex gap-3 mb-3">
+            <Button
+              variant="secondary"
+              onClick={() => navigate(`/topics/${topicId}`)}
+              className="flex-1"
+              disabled={completing}
+            >
+              Back to Topic
+            </Button>
+            <Button
+              onClick={handleComplete}
+              className="flex-1 flex items-center justify-center gap-2"
+              loading={completing}
+              disabled={completing}
+            >
+              <CheckCircle className="w-5 h-5" />
+              {completing ? 'Completing...' : 'Complete Lesson'}
+            </Button>
+          </div>
           <Button
-            variant="secondary"
-            onClick={() => navigate(`/topics/${topicId}`)}
-            className="flex-1"
+            variant="accent"
+            onClick={() => navigate(`/flashcards/${lessonId}`)}
+            className="w-full"
             disabled={completing}
           >
-            Back to Topic
-          </Button>
-          <Button
-            onClick={handleComplete}
-            className="flex-1 flex items-center justify-center gap-2"
-            loading={completing}
-            disabled={completing}
-          >
-            <CheckCircle className="w-5 h-5" />
-            {completing ? 'Completing...' : 'Complete Lesson'}
+            📚 Practice with Flashcards
           </Button>
         </div>
       </div>
