@@ -6,5 +6,7 @@ export { default as Topics } from './Topics';
 export { default as TopicDashboard } from './TopicDashboard';
 export { default as LessonView } from './LessonView';
 export { default as Flashcards } from './Flashcards';
+export { default as Quiz } from './Quiz';
 export { default as Progress } from './Progress';
+export { default as Bookmarks } from './Bookmarks';
 export { default as Profile } from './Profile';

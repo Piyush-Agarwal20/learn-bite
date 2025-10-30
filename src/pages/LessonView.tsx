@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { ChevronLeft, Clock, BookOpen, Lightbulb, CheckCircle } from 'lucide-react';
+import { ChevronLeft, Clock, BookOpen, Lightbulb, CheckCircle, Bookmark, FileText, Save } from 'lucide-react';
 import { getLessonById } from '../services/api/lessons';
 import { markLessonComplete } from '../services/api/progress';
+import { isBookmarked, toggleBookmark, getLessonNote, saveLessonNote } from '../services/api';
 import type { Lesson } from '../types';
 import Button from '../components/Button';
 import LoadingSpinner from '../components/LoadingSpinner';
@@ -14,17 +15,36 @@ const LessonView = () => {
   const [loading, setLoading] = useState(true);
   const [completing, setCompleting] = useState(false);
   const [showSimpleExplanation, setShowSimpleExplanation] = useState(false);
+  const [bookmarked, setBookmarked] = useState(false);
+  const [bookmarkLoading, setBookmarkLoading] = useState(false);
+  const [notes, setNotes] = useState('');
+  const [notesExpanded, setNotesExpanded] = useState(false);
+  const [savingNotes, setSavingNotes] = useState(false);
 
   useEffect(() => {
     async function fetchLesson() {
       if (!lessonId) return;
 
       setLoading(true);
-      const { data, error } = await getLessonById(lessonId);
+      const [lessonResult, bookmarkResult, notesResult] = await Promise.all([
+        getLessonById(lessonId),
+        isBookmarked(lessonId),
+        getLessonNote(lessonId),
+      ]);
 
-      if (!error && data) {
-        setLesson(data);
+      if (!lessonResult.error && lessonResult.data) {
+        setLesson(lessonResult.data);
       }
+
+      if (!bookmarkResult.error) {
+        setBookmarked(bookmarkResult.data);
+      }
+
+      if (!notesResult.error && notesResult.data) {
+        setNotes(notesResult.data.content);
+        setNotesExpanded(true);
+      }
+
       setLoading(false);
     }
 
@@ -49,6 +69,35 @@ const LessonView = () => {
     if (topicId) {
       navigate(`/topics/${topicId}`);
     }
+  };
+
+  const handleBookmarkToggle = async () => {
+    if (!lessonId || bookmarkLoading) return;
+
+    setBookmarkLoading(true);
+    const { error } = await toggleBookmark(lessonId);
+
+    if (!error) {
+      setBookmarked(!bookmarked);
+    } else {
+      console.error('Error toggling bookmark:', error);
+    }
+
+    setBookmarkLoading(false);
+  };
+
+  const handleSaveNotes = async () => {
+    if (!lessonId || savingNotes) return;
+
+    setSavingNotes(true);
+    const { error } = await saveLessonNote(lessonId, notes);
+
+    if (error) {
+      console.error('Error saving notes:', error);
+      alert('Failed to save notes. Please try again.');
+    }
+
+    setSavingNotes(false);
   };
 
   if (loading) {
@@ -92,6 +141,18 @@ const LessonView = () => {
                 <BookOpen className="w-4 h-4" />
                 <span>Lesson {lesson.order_index || lesson.order}</span>
               </div>
+              <button
+                onClick={handleBookmarkToggle}
+                disabled={bookmarkLoading}
+                className={`p-2 rounded-lg transition-colors ${
+                  bookmarked
+                    ? 'text-yellow-600 bg-yellow-50 hover:bg-yellow-100'
+                    : 'text-gray-400 hover:text-gray-600 hover:bg-gray-100'
+                }`}
+                title={bookmarked ? 'Remove bookmark' : 'Add bookmark'}
+              >
+                <Bookmark className={`w-5 h-5 ${bookmarked ? 'fill-current' : ''}`} />
+              </button>
             </div>
           </div>
 
@@ -182,6 +243,45 @@ const LessonView = () => {
             </div>
           )}
         </div>
+
+        {/* Study Notes Section */}
+        <div className="mt-6">
+          <button
+            onClick={() => setNotesExpanded(!notesExpanded)}
+            className="w-full flex items-center justify-between p-4 bg-white rounded-xl border-2 border-gray-200 hover:border-primary-300 transition-colors"
+          >
+            <div className="flex items-center gap-2">
+              <FileText className="w-5 h-5 text-primary-600" />
+              <span className="font-semibold text-gray-900">Study Notes</span>
+              {notes && <span className="text-xs text-gray-500">({notes.length} characters)</span>}
+            </div>
+            <span className="text-gray-400">{notesExpanded ? '▼' : '▶'}</span>
+          </button>
+
+          {notesExpanded && (
+            <div className="mt-3 bg-white rounded-xl p-6 border-2 border-gray-200">
+              <textarea
+                value={notes}
+                onChange={(e) => setNotes(e.target.value)}
+                placeholder="Take notes while you learn... Your notes are saved automatically to your account."
+                className="w-full min-h-[200px] p-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent resize-y"
+              />
+              <div className="flex justify-between items-center mt-3">
+                <p className="text-xs text-gray-500">
+                  {notes.length > 0 ? `${notes.length} characters` : 'Start typing to add notes'}
+                </p>
+                <button
+                  onClick={handleSaveNotes}
+                  disabled={savingNotes}
+                  className="flex items-center gap-2 px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  <Save className="w-4 h-4" />
+                  {savingNotes ? 'Saving...' : 'Save Notes'}
+                </button>
+              </div>
+            </div>
+          )}
+        </div>
       </div>
 
       {/* Bottom Actions */}
@@ -206,14 +306,24 @@ const LessonView = () => {
               {completing ? 'Completing...' : 'Complete Lesson'}
             </Button>
           </div>
-          <Button
-            variant="accent"
-            onClick={() => navigate(`/flashcards/${lessonId}`)}
-            className="w-full"
-            disabled={completing}
-          >
-            📚 Practice with Flashcards
-          </Button>
+          <div className="flex gap-3">
+            <Button
+              variant="accent"
+              onClick={() => navigate(`/flashcards/${lessonId}`)}
+              className="flex-1"
+              disabled={completing}
+            >
+              📚 Flashcards
+            </Button>
+            <Button
+              variant="primary"
+              onClick={() => navigate(`/quiz/${lessonId}`)}
+              className="flex-1"
+              disabled={completing}
+            >
+              📝 Take Quiz
+            </Button>
+          </div>
         </div>
       </div>
     </div>

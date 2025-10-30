@@ -151,3 +151,79 @@ export async function getTopicProgress(topicId: string) {
     error: null,
   };
 }
+
+/**
+ * Get progress for all topics with details
+ */
+export async function getAllTopicsProgress() {
+  const { data: { user } } = await supabase.auth.getUser();
+
+  if (!user) {
+    return { data: null, error: new Error('Not authenticated') };
+  }
+
+  // Get all topics
+  const { data: topics, error: topicsError } = await supabase
+    .from('topics')
+    .select('id, title, category, difficulty');
+
+  if (topicsError || !topics) {
+    return { data: null, error: topicsError };
+  }
+
+  // Get progress for each topic
+  const topicsWithProgress = await Promise.all(
+    topics.map(async (topic) => {
+      const { data: progressData } = await getTopicProgress(topic.id);
+      return {
+        ...topic,
+        progress: progressData?.percentage || 0,
+        completedLessons: progressData?.completed || 0,
+        totalLessons: progressData?.total || 0,
+      };
+    })
+  );
+
+  return { data: topicsWithProgress, error: null };
+}
+
+/**
+ * Get weekly activity for the current user
+ */
+export async function getWeeklyActivity() {
+  const { data: { user } } = await supabase.auth.getUser();
+
+  if (!user) {
+    return { data: null, error: new Error('Not authenticated') };
+  }
+
+  // Get last 7 days
+  const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+  const today = new Date();
+  const weekActivity = [];
+
+  for (let i = 6; i >= 0; i--) {
+    const date = new Date(today);
+    date.setDate(date.getDate() - i);
+    date.setHours(0, 0, 0, 0);
+
+    const nextDate = new Date(date);
+    nextDate.setDate(nextDate.getDate() + 1);
+
+    const { count } = await supabase
+      .from('user_progress')
+      .select('*', { count: 'exact', head: true })
+      .eq('user_id', user.id)
+      .eq('completed', true)
+      .gte('completion_date', date.toISOString())
+      .lt('completion_date', nextDate.toISOString());
+
+    weekActivity.push({
+      day: days[date.getDay()],
+      lessons: count || 0,
+      date: date.toISOString().split('T')[0],
+    });
+  }
+
+  return { data: weekActivity, error: null };
+}
