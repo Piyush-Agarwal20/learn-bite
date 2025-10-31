@@ -68,3 +68,12 @@ export {
   getAllUserNotes,
 } from './notes';
 export type { LessonNote } from './notes';
+
+// Analytics API
+export {
+  getDailyActivity,
+  getTopicCompletionRates,
+  getLearningTimeStats,
+  getQuizPerformance,
+  getLearningPatterns,
+} from './analytics';

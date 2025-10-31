@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
 import { Card, ProgressBar, PageContainer, LoadingSpinner } from '../components';
-import { getUserStats, getAllTopicsProgress, getWeeklyActivity } from '../services/api';
+import { getUserStats, getAllTopicsProgress, getWeeklyActivity, getLearningTimeStats, getLearningPatterns } from '../services/api';
 import type { UserStats } from '../types';
+import { Clock, TrendingUp, Calendar } from 'lucide-react';
 
 interface TopicProgress {
   id: string;
@@ -23,16 +24,20 @@ const Progress = () => {
   const [stats, setStats] = useState<UserStats | null>(null);
   const [topicsProgress, setTopicsProgress] = useState<TopicProgress[]>([]);
   const [weeklyActivity, setWeeklyActivity] = useState<WeeklyActivity[]>([]);
+  const [timeStats, setTimeStats] = useState<any>(null);
+  const [patterns, setPatterns] = useState<any>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function fetchData() {
       setLoading(true);
 
-      const [statsResult, topicsResult, weeklyResult] = await Promise.all([
+      const [statsResult, topicsResult, weeklyResult, timeResult, patternsResult] = await Promise.all([
         getUserStats(),
         getAllTopicsProgress(),
         getWeeklyActivity(),
+        getLearningTimeStats(),
+        getLearningPatterns(),
       ]);
 
       if (!statsResult.error && statsResult.data) {
@@ -45,6 +50,14 @@ const Progress = () => {
 
       if (!weeklyResult.error && weeklyResult.data) {
         setWeeklyActivity(weeklyResult.data);
+      }
+
+      if (!timeResult.error && timeResult.data) {
+        setTimeStats(timeResult.data);
+      }
+
+      if (!patternsResult.error && patternsResult.data) {
+        setPatterns(patternsResult.data);
       }
 
       setLoading(false);
@@ -255,6 +268,77 @@ const Progress = () => {
             )}
           </div>
         </Card>
+
+        {/* Time Statistics */}
+        {timeStats && (
+          <Card padding="lg">
+            <div className="flex items-center gap-2 mb-4">
+              <Clock className="w-5 h-5 text-primary-600" />
+              <h2 className="text-xl font-bold text-secondary-900 text-left">Time Statistics</h2>
+            </div>
+            <div className="grid grid-cols-2 gap-3">
+              <div className="p-3 bg-secondary-50 rounded-lg text-left">
+                <p className="text-sm text-secondary-600 text-left">Total Learning Time</p>
+                <p className="font-semibold text-secondary-900 text-left text-lg">
+                  {timeStats.totalHours}h {timeStats.totalMinutes % 60}m
+                </p>
+              </div>
+              <div className="p-3 bg-secondary-50 rounded-lg text-left">
+                <p className="text-sm text-secondary-600 text-left">Average Per Day</p>
+                <p className="font-semibold text-secondary-900 text-left text-lg">
+                  {timeStats.averagePerDay} min
+                </p>
+              </div>
+              <div className="p-3 bg-secondary-50 rounded-lg text-left">
+                <p className="text-sm text-secondary-600 text-left">Active Days</p>
+                <p className="font-semibold text-secondary-900 text-left text-lg">
+                  {timeStats.activeDays}
+                </p>
+              </div>
+              <div className="p-3 bg-secondary-50 rounded-lg text-left">
+                <p className="text-sm text-secondary-600 text-left">Longest Streak</p>
+                <p className="font-semibold text-secondary-900 text-left text-lg">
+                  {timeStats.longestStreak} days
+                </p>
+              </div>
+            </div>
+          </Card>
+        )}
+
+        {/* Learning Patterns */}
+        {patterns && patterns.mostProductiveTime !== 'Not enough data' && (
+          <Card padding="lg">
+            <div className="flex items-center gap-2 mb-4">
+              <TrendingUp className="w-5 h-5 text-accent-600" />
+              <h2 className="text-xl font-bold text-secondary-900 text-left">Learning Patterns</h2>
+            </div>
+            <div className="space-y-3 text-left">
+              <div className="p-3 bg-accent-50 rounded-lg text-left border-l-4 border-accent-500">
+                <p className="text-sm text-accent-700 text-left font-medium">
+                  Most Productive Time
+                </p>
+                <p className="text-lg font-bold text-accent-900 text-left mt-1">
+                  {patterns.mostProductiveTime}
+                </p>
+              </div>
+              {patterns.preferredDays && patterns.preferredDays.length > 0 && (
+                <div className="p-3 bg-secondary-50 rounded-lg text-left">
+                  <p className="text-sm text-secondary-600 text-left mb-2">Preferred Days</p>
+                  <div className="flex gap-2 flex-wrap">
+                    {patterns.preferredDays.map((day: string) => (
+                      <span
+                        key={day}
+                        className="px-3 py-1 bg-primary-100 text-primary-700 rounded-full text-sm font-medium"
+                      >
+                        {day}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+          </Card>
+        )}
       </div>
     </PageContainer>
   );

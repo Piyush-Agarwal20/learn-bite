@@ -5,6 +5,7 @@ import { MainLayout } from './components';
 import type { NavItem } from './components';
 import { Landing, Login, Signup, Home, Topics, TopicDashboard, Progress, Profile, LessonView, Flashcards, Quiz, Bookmarks } from './pages';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
+import { ThemeProvider } from './contexts/ThemeContext';
 import LoadingSpinner from './components/LoadingSpinner';
 
 // Main App Layout Component
@@ -145,14 +146,16 @@ function ProtectedAppLayout() {
 function App() {
   return (
     <BrowserRouter>
-      <AuthProvider>
-        <Routes>
-          <Route path="/" element={<Landing />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<Signup />} />
-          <Route path="/*" element={<ProtectedAppLayout />} />
-        </Routes>
-      </AuthProvider>
+      <ThemeProvider>
+        <AuthProvider>
+          <Routes>
+            <Route path="/" element={<Landing />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<Signup />} />
+            <Route path="/*" element={<ProtectedAppLayout />} />
+          </Routes>
+        </AuthProvider>
+      </ThemeProvider>
     </BrowserRouter>
   );
 }

@@ -2,14 +2,16 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Card, Button, PageContainer, LoadingSpinner } from '../components';
 import { useAuth } from '../contexts/AuthContext';
+import { useTheme } from '../contexts/ThemeContext';
 import { getUserStats } from '../services/api/progress';
 import { getProfile, updateProfile, type Profile as ProfileType } from '../services/api';
 import type { UserStats } from '../types';
-import { User, Mail, Bell, Book, Award, LogOut, Edit2, Check, X, Bookmark } from 'lucide-react';
+import { User, Mail, Bell, Book, Award, LogOut, Edit2, Check, X, Bookmark, Moon, Sun } from 'lucide-react';
 
 const Profile = () => {
   const navigate = useNavigate();
   const { user, signOut } = useAuth();
+  const { theme, toggleTheme } = useTheme();
   const [profile, setProfile] = useState<ProfileType | null>(null);
   const [stats, setStats] = useState<UserStats | null>(null);
   const [loading, setLoading] = useState(true);
@@ -312,11 +314,27 @@ const Profile = () => {
         {/* App Settings */}
         <Card padding="lg">
           <h2 className="text-xl font-bold text-secondary-900 mb-4 text-left">App Settings</h2>
-          <div className="space-y-3 text-left">
-            <div className="p-3 bg-secondary-50 rounded-lg text-left">
-              <p className="font-semibold text-secondary-900 text-left">Theme</p>
-              <p className="text-sm text-secondary-600 text-left">Light Mode</p>
+          <div className="space-y-4">
+            {/* Theme Toggle */}
+            <div className="flex items-center justify-between">
+              <div className="text-left">
+                <p className="font-semibold text-secondary-900">Theme</p>
+                <p className="text-sm text-secondary-600">{theme === 'dark' ? 'Dark Mode' : 'Light Mode'}</p>
+              </div>
+              <button
+                onClick={toggleTheme}
+                className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
+                  theme === 'dark' ? 'bg-primary-500' : 'bg-secondary-300'
+                }`}
+              >
+                <span
+                  className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
+                    theme === 'dark' ? 'translate-x-6' : 'translate-x-1'
+                  }`}
+                />
+              </button>
             </div>
+
             <div className="p-3 bg-secondary-50 rounded-lg text-left">
               <p className="font-semibold text-secondary-900 text-left">Language</p>
               <p className="text-sm text-secondary-600 text-left">English</p>
