@@ -1,5 +1,4 @@
 import { supabase } from '../supabase';
-import type { Topic, Lesson } from '../../types';
 
 /**
  * Get next lesson to continue for the user
@@ -94,7 +93,7 @@ export async function getRecommendedTopics() {
         return { ...topic, progress: 0, lessonCount: 0 };
       }
 
-      const { data: progress } = await supabase
+      const { count: progress } = await supabase
         .from('user_progress')
         .select('*', { count: 'exact', head: true })
         .eq('user_id', user.id)

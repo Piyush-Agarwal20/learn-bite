@@ -214,6 +214,16 @@ const Home = () => {
             <p className="font-semibold text-secondary-900">View Progress</p>
             <p className="text-xs text-secondary-600 mt-1">Track your journey</p>
           </Card>
+          <Card hoverable clickable padding="md" className="text-left" onClick={() => navigate('/quiz-generator')}>
+            <div className="text-3xl mb-2">✨</div>
+            <p className="font-semibold text-secondary-900">AI Quiz Generator</p>
+            <p className="text-xs text-secondary-600 mt-1">Create custom quizzes</p>
+          </Card>
+          <Card hoverable clickable padding="md" className="text-left" onClick={() => navigate('/custom-quizzes')}>
+            <div className="text-3xl mb-2">🎯</div>
+            <p className="font-semibold text-secondary-900">My Quizzes</p>
+            <p className="text-xs text-secondary-600 mt-1">View saved quizzes</p>
+          </Card>
         </div>
 
         {/* Empty State for New Users */}

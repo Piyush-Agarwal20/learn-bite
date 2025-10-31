@@ -6,7 +6,7 @@ import { useTheme } from '../contexts/ThemeContext';
 import { getUserStats } from '../services/api/progress';
 import { getProfile, updateProfile, type Profile as ProfileType } from '../services/api';
 import type { UserStats } from '../types';
-import { User, Mail, Bell, Book, Award, LogOut, Edit2, Check, X, Bookmark, Moon, Sun } from 'lucide-react';
+import { User, Mail, Bell, Book, Award, LogOut, Edit2, Check, X, Bookmark } from 'lucide-react';
 
 const Profile = () => {
   const navigate = useNavigate();

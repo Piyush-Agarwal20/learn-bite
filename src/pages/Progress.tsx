@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Card, ProgressBar, PageContainer, LoadingSpinner } from '../components';
 import { getUserStats, getAllTopicsProgress, getWeeklyActivity, getLearningTimeStats, getLearningPatterns } from '../services/api';
 import type { UserStats } from '../types';
-import { Clock, TrendingUp, Calendar } from 'lucide-react';
+import { Clock, TrendingUp } from 'lucide-react';
 
 interface TopicProgress {
   id: string;

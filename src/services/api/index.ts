@@ -77,3 +77,12 @@ export {
   getQuizPerformance,
   getLearningPatterns,
 } from './analytics';
+
+// Custom Quizzes API
+export {
+  createCustomQuiz,
+  getUserCustomQuizzes,
+  getCustomQuizById,
+  deleteCustomQuiz,
+} from './customQuizzes';
+export type { CustomQuiz } from './customQuizzes';

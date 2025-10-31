@@ -58,7 +58,7 @@ export async function isBookmarked(lessonId: string) {
     return { data: false, error: null };
   }
 
-  const { data, error } = await supabase
+  const { data } = await supabase
     .from('lesson_bookmarks')
     .select('id')
     .eq('user_id', user.id)

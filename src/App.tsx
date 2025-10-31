@@ -4,6 +4,9 @@ import './App.css';
 import { MainLayout } from './components';
 import type { NavItem } from './components';
 import { Landing, Login, Signup, Home, Topics, TopicDashboard, Progress, Profile, LessonView, Flashcards, Quiz, Bookmarks } from './pages';
+import CustomQuizGenerator from './pages/CustomQuizGenerator';
+import CustomQuizzes from './pages/CustomQuizzes';
+import CustomQuizTaking from './pages/CustomQuizTaking';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
 import { ThemeProvider } from './contexts/ThemeContext';
 import LoadingSpinner from './components/LoadingSpinner';
@@ -114,6 +117,9 @@ function AppLayout() {
         <Route path="/lesson/:topicId/:lessonId" element={<LessonView />} />
         <Route path="/flashcards/:lessonId" element={<Flashcards />} />
         <Route path="/quiz/:lessonId" element={<Quiz />} />
+        <Route path="/quiz-generator" element={<CustomQuizGenerator />} />
+        <Route path="/custom-quizzes" element={<CustomQuizzes />} />
+        <Route path="/custom-quiz/:quizId" element={<CustomQuizTaking />} />
         <Route path="/progress" element={<Progress />} />
         <Route path="/bookmarks" element={<Bookmarks />} />
         <Route path="/profile" element={<Profile />} />
