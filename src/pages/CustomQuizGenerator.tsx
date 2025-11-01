@@ -64,7 +64,7 @@ const CustomQuizGenerator = () => {
               <Sparkles className="w-6 h-6 text-primary-500" />
               AI Quiz Generator
             </h1>
-            <p className="text-sm text-secondary-600 dark:text-secondary-400">
+            <p className="text-sm text-secondary-600 dark:text-secondary-100">
               Create custom quizzes powered by AI
             </p>
           </div>
@@ -84,7 +84,7 @@ const CustomQuizGenerator = () => {
                 value={formData.topic}
                 onChange={(e) => setFormData({ ...formData, topic: e.target.value })}
                 placeholder="e.g., React Hooks, Python Basics, Machine Learning"
-                className="w-full px-4 py-3 rounded-lg border border-secondary-300 dark:border-secondary-600 bg-white dark:bg-secondary-800 text-secondary-900 dark:text-secondary-100 placeholder-secondary-400 focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                className="w-full px-4 py-3 rounded-lg border border-secondary-300 dark:border-secondary-600 bg-white dark:bg-secondary-800 text-secondary-900 dark:text-secondary-100 placeholder-secondary-500 dark:placeholder-secondary-300 focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                 required
               />
             </div>
@@ -123,9 +123,9 @@ const CustomQuizGenerator = () => {
                 onChange={(e) => setFormData({ ...formData, focusAreas: e.target.value })}
                 placeholder="e.g., useState, useEffect, custom hooks"
                 rows={3}
-                className="w-full px-4 py-3 rounded-lg border border-secondary-300 dark:border-secondary-600 bg-white dark:bg-secondary-800 text-secondary-900 dark:text-secondary-100 placeholder-secondary-400 focus:ring-2 focus:ring-primary-500 focus:border-transparent resize-none"
+                className="w-full px-4 py-3 rounded-lg border border-secondary-300 dark:border-secondary-600 bg-white dark:bg-secondary-800 text-secondary-900 dark:text-secondary-100 placeholder-secondary-500 dark:placeholder-secondary-300 focus:ring-2 focus:ring-primary-500 focus:border-transparent resize-none"
               />
-              <p className="text-xs text-secondary-600 dark:text-secondary-300 mt-1">
+              <p className="text-xs text-secondary-600 dark:text-secondary-100 mt-1">
                 Specify particular aspects you want the quiz to focus on
               </p>
             </div>
@@ -144,7 +144,7 @@ const CustomQuizGenerator = () => {
                 onChange={(e) => setFormData({ ...formData, numberOfQuestions: parseInt(e.target.value) })}
                 className="w-full h-2 bg-secondary-200 dark:bg-secondary-700 rounded-lg appearance-none cursor-pointer accent-primary-500"
               />
-              <div className="flex justify-between text-xs text-secondary-600 dark:text-secondary-300 mt-1">
+              <div className="flex justify-between text-xs text-secondary-600 dark:text-secondary-100 mt-1">
                 <span>3 questions</span>
                 <span>10 questions</span>
               </div>
@@ -183,7 +183,7 @@ const CustomQuizGenerator = () => {
             <h3 className="font-semibold text-secondary-900 dark:text-white mb-2">
               How it works
             </h3>
-            <ul className="text-sm text-secondary-700 dark:text-secondary-200 space-y-1">
+            <ul className="text-sm text-secondary-700 dark:text-secondary-100 space-y-1">
               <li>• AI generates unique questions based on your preferences</li>
               <li>• Each quiz is saved to your profile for later access</li>
               <li>• Questions include detailed explanations</li>
