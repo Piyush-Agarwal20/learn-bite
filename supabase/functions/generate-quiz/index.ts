@@ -75,9 +75,11 @@ serve(async (req) => {
     const params: QuizGenerationParams = await req.json()
     const { topic, level, focusAreas, numberOfQuestions } = params
 
-    // Validate input
-    if (!topic || !level || !focusAreas || !numberOfQuestions) {
-      throw new Error('Missing required parameters')
+    console.log('Received params:', { topic, level, focusAreas, numberOfQuestions })
+
+    // Validate input (focusAreas is optional)
+    if (!topic || !level || !numberOfQuestions) {
+      throw new Error('Missing required parameters: topic, level, or numberOfQuestions')
     }
 
     // Create prompt for OpenAI
