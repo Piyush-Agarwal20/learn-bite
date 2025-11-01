@@ -23,9 +23,9 @@ const PageContainer: React.FC<PageContainerProps> = ({
 
   const paddingStyles = {
     none: '',
-    sm: 'px-4 py-3',
-    md: 'px-4 py-6',
-    lg: 'px-6 py-8',
+    sm: 'px-4 sm:px-6 py-3',
+    md: 'px-4 sm:px-6 py-6',
+    lg: 'px-6 sm:px-8 py-8',
   };
 
   return (

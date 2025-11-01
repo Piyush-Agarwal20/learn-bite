@@ -105,21 +105,22 @@ const CustomQuizTaking = () => {
 
   return (
     <div className="min-h-screen">
-      <div className="max-w-3xl mx-auto px-4 py-6 pb-24">
+      <div className="max-w-3xl mx-auto px-4 sm:px-6 py-4 sm:py-6 pb-24">
         {/* Header */}
-        <div className="flex items-center gap-4 mb-6">
+        <div className="flex items-center gap-3 sm:gap-4 mb-4 sm:mb-6">
           <button
             onClick={() => navigate('/custom-quizzes')}
-            className="p-2 rounded-lg hover:bg-secondary-100 transition-colors"
+            className="p-2 rounded-lg hover:bg-secondary-100 active:bg-secondary-200 transition-colors touch-manipulation flex-shrink-0"
+            aria-label="Back to quizzes"
           >
-            <ArrowLeft className="w-6 h-6 text-secondary-900" />
+            <ArrowLeft className="w-5 h-5 sm:w-6 sm:h-6 text-secondary-900" />
           </button>
-          <div className="text-left flex-1">
-            <h1 className="text-xl font-bold text-secondary-900 flex items-center gap-2">
-              <Sparkles className="w-5 h-5 text-primary-500" />
-              {quiz.title}
+          <div className="text-left flex-1 min-w-0">
+            <h1 className="text-lg sm:text-xl font-bold text-secondary-900 flex items-center gap-2">
+              <Sparkles className="w-4 h-4 sm:w-5 sm:h-5 text-primary-500 flex-shrink-0" />
+              <span className="truncate">{quiz.title}</span>
             </h1>
-            <p className="text-sm text-secondary-600">
+            <p className="text-xs sm:text-sm text-secondary-600">
               {showResults ? 'Review Your Answers' : `Question ${currentQuestion + 1} of ${quiz.questions.length}`}
             </p>
           </div>
@@ -127,24 +128,24 @@ const CustomQuizTaking = () => {
 
         {/* Results Summary */}
         {showResults && (
-          <Card padding="lg" className="mb-6">
+          <Card padding="lg" className="mb-4 sm:mb-6">
             <div className="text-center">
-              <div className={`text-5xl font-bold mb-2 ${
+              <div className={`text-4xl sm:text-5xl font-bold mb-2 ${
                 score / quiz.questions.length >= 0.7 ? 'text-green-600' :
                 score / quiz.questions.length >= 0.5 ? 'text-yellow-600' :
                 'text-red-600'
               }`}>
                 {score}/{quiz.questions.length}
               </div>
-              <p className="text-lg text-secondary-900 mb-1">
+              <p className="text-base sm:text-lg text-secondary-900 mb-1">
                 {score / quiz.questions.length >= 0.7 ? 'Great job!' :
                  score / quiz.questions.length >= 0.5 ? 'Good effort!' :
                  'Keep practicing!'}
               </p>
-              <p className="text-sm text-secondary-600 mb-4">
+              <p className="text-xs sm:text-sm text-secondary-600 mb-4">
                 {Math.round((score / quiz.questions.length) * 100)}% correct
               </p>
-              <Button onClick={handleRetake} className="mx-auto">
+              <Button onClick={handleRetake} className="mx-auto touch-manipulation">
                 Retake Quiz
               </Button>
             </div>
@@ -152,7 +153,7 @@ const CustomQuizTaking = () => {
         )}
 
         {/* Progress Bar */}
-        <div className="mb-6">
+        <div className="mb-4 sm:mb-6">
           <div className="flex gap-1">
             {quiz.questions.map((_, index) => (
               <div
@@ -174,21 +175,21 @@ const CustomQuizTaking = () => {
         </div>
 
         {/* Question Card */}
-        <Card padding="lg" className="mb-6">
-          <div className="text-left mb-6">
-            <div className="flex items-center gap-2 mb-3">
-              <BookOpen className="w-5 h-5 text-primary-500" />
-              <span className="text-sm font-semibold text-primary-600 dark:text-primary-400">
+        <Card padding="lg" className="mb-4 sm:mb-6">
+          <div className="text-left mb-4 sm:mb-6">
+            <div className="flex items-center gap-2 mb-2 sm:mb-3">
+              <BookOpen className="w-4 h-4 sm:w-5 sm:h-5 text-primary-500" />
+              <span className="text-xs sm:text-sm font-semibold text-primary-600">
                 Question {currentQuestion + 1}
               </span>
             </div>
-            <h2 className="text-xl font-semibold text-secondary-900">
+            <h2 className="text-lg sm:text-xl font-semibold text-secondary-900">
               {currentQ.question}
             </h2>
           </div>
 
           {/* Options */}
-          <div className="space-y-3 mb-6">
+          <div className="space-y-2 sm:space-y-3 mb-4 sm:mb-6">
             {currentQ.options.map((option, index) => {
               const isSelected = selectedAnswers[currentQuestion] === index;
               const isCorrectAnswer = index === currentQ.correctAnswer;
@@ -210,19 +211,19 @@ const CustomQuizTaking = () => {
                   key={index}
                   onClick={() => handleAnswerSelect(index)}
                   disabled={showResults}
-                  className={`w-full p-4 rounded-lg border-2 text-left transition-all ${optionStyle} ${
-                    showResults ? 'cursor-default' : 'cursor-pointer'
+                  className={`w-full p-3 sm:p-4 rounded-lg border-2 text-left transition-all touch-manipulation ${optionStyle} ${
+                    showResults ? 'cursor-default' : 'cursor-pointer active:scale-[0.98]'
                   }`}
                 >
-                  <div className="flex items-center justify-between">
-                    <span className="text-secondary-900">
+                  <div className="flex items-center justify-between gap-2">
+                    <span className="text-sm sm:text-base text-secondary-900 flex-1">
                       {option}
                     </span>
                     {showResults && isCorrectAnswer && (
-                      <CheckCircle2 className="w-5 h-5 text-green-600" />
+                      <CheckCircle2 className="w-5 h-5 text-green-600 flex-shrink-0" />
                     )}
                     {showResults && isSelected && !isCorrectAnswer && (
-                      <XCircle className="w-5 h-5 text-red-600" />
+                      <XCircle className="w-5 h-5 text-red-600 flex-shrink-0" />
                     )}
                   </div>
                 </button>
@@ -232,15 +233,15 @@ const CustomQuizTaking = () => {
 
           {/* Explanation (shown in results mode) */}
           {showResults && (
-            <div className={`p-4 rounded-lg ${
+            <div className={`p-3 sm:p-4 rounded-lg ${
               isCorrect
-                ? 'bg-green-50 dark:bg-green-900/20 border-l-4 border-green-500'
+                ? 'bg-green-50 border-l-4 border-green-500'
                 : 'bg-red-50 border-l-4 border-red-500'
             }`}>
-              <p className="font-semibold text-secondary-900 mb-1 text-left">
+              <p className="font-semibold text-sm sm:text-base text-secondary-900 mb-1 text-left">
                 {isCorrect ? 'Correct!' : 'Incorrect'}
               </p>
-              <p className="text-sm text-secondary-700 text-left">
+              <p className="text-xs sm:text-sm text-secondary-700 text-left">
                 {currentQ.explanation}
               </p>
             </div>
@@ -248,31 +249,31 @@ const CustomQuizTaking = () => {
         </Card>
 
         {/* Navigation */}
-        <div className="flex gap-3">
+        <div className="flex gap-2 sm:gap-3">
           <Button
             onClick={handlePrevious}
             disabled={currentQuestion === 0}
             variant="secondary"
-            className="flex-1"
+            className="flex-1 touch-manipulation"
           >
-            Previous
+            <span className="text-sm sm:text-base">Previous</span>
           </Button>
 
           {!showResults && currentQuestion === quiz.questions.length - 1 ? (
             <Button
               onClick={handleSubmit}
               disabled={!isAnswered}
-              className="flex-1"
+              className="flex-1 touch-manipulation"
             >
-              Submit Quiz
+              <span className="text-sm sm:text-base">Submit Quiz</span>
             </Button>
           ) : (
             <Button
               onClick={handleNext}
               disabled={currentQuestion === quiz.questions.length - 1}
-              className="flex-1"
+              className="flex-1 touch-manipulation"
             >
-              Next
+              <span className="text-sm sm:text-base">Next</span>
             </Button>
           )}
         </div>

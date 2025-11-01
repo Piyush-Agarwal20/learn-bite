@@ -50,21 +50,22 @@ const CustomQuizGenerator = () => {
 
   return (
     <div className="min-h-screen">
-      <div className="max-w-2xl mx-auto px-4 py-6 pb-24">
+      <div className="max-w-2xl mx-auto px-4 sm:px-6 py-4 sm:py-6 pb-24">
         {/* Header */}
-        <div className="flex items-center gap-4 mb-6">
+        <div className="flex items-center gap-3 sm:gap-4 mb-4 sm:mb-6">
           <button
             onClick={() => navigate(-1)}
-            className="p-2 rounded-lg hover:bg-secondary-100 transition-colors"
+            className="p-2 rounded-lg hover:bg-secondary-100 active:bg-secondary-200 transition-colors touch-manipulation"
+            aria-label="Go back"
           >
-            <ArrowLeft className="w-6 h-6 text-secondary-900" />
+            <ArrowLeft className="w-5 h-5 sm:w-6 sm:h-6 text-secondary-900" />
           </button>
-          <div className="text-left">
-            <h1 className="text-2xl font-bold text-secondary-900 flex items-center gap-2">
-              <Sparkles className="w-6 h-6 text-primary-500" />
-              AI Quiz Generator
+          <div className="text-left flex-1 min-w-0">
+            <h1 className="text-xl sm:text-2xl font-bold text-secondary-900 flex items-center gap-2">
+              <Sparkles className="w-5 h-5 sm:w-6 sm:h-6 text-primary-500 flex-shrink-0" />
+              <span className="truncate">AI Quiz Generator</span>
             </h1>
-            <p className="text-sm text-secondary-600">
+            <p className="text-xs sm:text-sm text-secondary-600">
               Create custom quizzes powered by AI
             </p>
           </div>
@@ -83,8 +84,8 @@ const CustomQuizGenerator = () => {
                 type="text"
                 value={formData.topic}
                 onChange={(e) => setFormData({ ...formData, topic: e.target.value })}
-                placeholder="e.g., React Hooks, Python Basics, Machine Learning"
-                className="w-full px-4 py-3 rounded-lg border border-secondary-300 bg-white text-secondary-900 placeholder-secondary-500 focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                placeholder="e.g., React Hooks, Python Basics"
+                className="w-full px-3 sm:px-4 py-2.5 sm:py-3 text-sm sm:text-base rounded-lg border border-secondary-300 bg-white text-secondary-900 placeholder-secondary-500 focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                 required
               />
             </div>
@@ -95,16 +96,16 @@ const CustomQuizGenerator = () => {
                 <Target className="w-4 h-4 text-primary-400" />
                 Difficulty Level
               </label>
-              <div className="grid grid-cols-3 gap-3">
+              <div className="grid grid-cols-3 gap-2 sm:gap-3">
                 {(['Beginner', 'Intermediate', 'Advanced'] as const).map((level) => (
                   <button
                     key={level}
                     type="button"
                     onClick={() => setFormData({ ...formData, level })}
-                    className={`px-4 py-3 rounded-lg border-2 font-semibold transition-all ${
+                    className={`px-2 sm:px-4 py-2.5 sm:py-3 text-xs sm:text-base rounded-lg border-2 font-semibold transition-all touch-manipulation ${
                       formData.level === level
                         ? 'border-primary-600 bg-primary-600 text-white'
-                        : 'border-secondary-300 bg-white text-secondary-900 hover:border-primary-400'
+                        : 'border-secondary-300 bg-white text-secondary-900 hover:border-primary-400 active:bg-secondary-50'
                     }`}
                   >
                     {level}
@@ -121,9 +122,9 @@ const CustomQuizGenerator = () => {
               <textarea
                 value={formData.focusAreas}
                 onChange={(e) => setFormData({ ...formData, focusAreas: e.target.value })}
-                placeholder="e.g., useState, useEffect, custom hooks"
+                placeholder="e.g., useState, useEffect"
                 rows={3}
-                className="w-full px-4 py-3 rounded-lg border border-secondary-300 bg-white text-secondary-900 placeholder-secondary-500 focus:ring-2 focus:ring-primary-500 focus:border-transparent resize-none"
+                className="w-full px-3 sm:px-4 py-2.5 sm:py-3 text-sm sm:text-base rounded-lg border border-secondary-300 bg-white text-secondary-900 placeholder-secondary-500 focus:ring-2 focus:ring-primary-500 focus:border-transparent resize-none"
               />
               <p className="text-xs text-secondary-600 mt-1">
                 Specify particular aspects you want the quiz to focus on
