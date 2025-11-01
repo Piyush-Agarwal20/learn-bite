@@ -49,22 +49,22 @@ const CustomQuizGenerator = () => {
   };
 
   return (
-    <div className="min-h-screen bg-secondary-50 dark:bg-secondary-900">
+    <div className="min-h-screen">
       <div className="max-w-2xl mx-auto px-4 py-6 pb-24">
         {/* Header */}
         <div className="flex items-center gap-4 mb-6">
           <button
             onClick={() => navigate(-1)}
-            className="p-2 rounded-lg hover:bg-secondary-100 dark:hover:bg-secondary-800 transition-colors"
+            className="p-2 rounded-lg hover:bg-secondary-100 transition-colors"
           >
-            <ArrowLeft className="w-6 h-6 text-secondary-900 dark:text-secondary-100" />
+            <ArrowLeft className="w-6 h-6 text-secondary-900" />
           </button>
           <div className="text-left">
-            <h1 className="text-2xl font-bold text-secondary-900 dark:text-secondary-50 flex items-center gap-2">
+            <h1 className="text-2xl font-bold text-secondary-900 flex items-center gap-2">
               <Sparkles className="w-6 h-6 text-primary-500" />
               AI Quiz Generator
             </h1>
-            <p className="text-sm text-secondary-600 dark:text-secondary-100">
+            <p className="text-sm text-secondary-600">
               Create custom quizzes powered by AI
             </p>
           </div>
@@ -75,7 +75,7 @@ const CustomQuizGenerator = () => {
           <form onSubmit={handleSubmit} className="space-y-6">
             {/* Topic Input */}
             <div className="text-left">
-              <label className="flex items-center gap-2 text-sm font-semibold text-secondary-900 dark:text-white mb-2">
+              <label className="flex items-center gap-2 text-sm font-semibold text-secondary-900 mb-2">
                 <BookOpen className="w-4 h-4 text-primary-400" />
                 Topic
               </label>
@@ -84,14 +84,14 @@ const CustomQuizGenerator = () => {
                 value={formData.topic}
                 onChange={(e) => setFormData({ ...formData, topic: e.target.value })}
                 placeholder="e.g., React Hooks, Python Basics, Machine Learning"
-                className="w-full px-4 py-3 rounded-lg border border-secondary-300 dark:border-secondary-600 bg-white dark:bg-secondary-800 text-secondary-900 dark:text-secondary-100 placeholder-secondary-500 dark:placeholder-secondary-300 focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                className="w-full px-4 py-3 rounded-lg border border-secondary-300 bg-white text-secondary-900 placeholder-secondary-500 focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                 required
               />
             </div>
 
             {/* Level Selection */}
             <div className="text-left">
-              <label className="flex items-center gap-2 text-sm font-semibold text-secondary-900 dark:text-white mb-2">
+              <label className="flex items-center gap-2 text-sm font-semibold text-secondary-900 mb-2">
                 <Target className="w-4 h-4 text-primary-400" />
                 Difficulty Level
               </label>
@@ -104,7 +104,7 @@ const CustomQuizGenerator = () => {
                     className={`px-4 py-3 rounded-lg border-2 font-semibold transition-all ${
                       formData.level === level
                         ? 'border-primary-600 bg-primary-600 text-white'
-                        : 'border-secondary-300 dark:border-secondary-600 bg-white dark:bg-secondary-800 text-secondary-900 dark:text-secondary-100 hover:border-primary-400'
+                        : 'border-secondary-300 bg-white text-secondary-900 hover:border-primary-400'
                     }`}
                   >
                     {level}
@@ -115,7 +115,7 @@ const CustomQuizGenerator = () => {
 
             {/* Focus Areas */}
             <div className="text-left">
-              <label className="text-sm font-semibold text-secondary-900 dark:text-white mb-2 block">
+              <label className="text-sm font-semibold text-secondary-900 mb-2 block">
                 Focus Areas (Optional)
               </label>
               <textarea
@@ -123,16 +123,16 @@ const CustomQuizGenerator = () => {
                 onChange={(e) => setFormData({ ...formData, focusAreas: e.target.value })}
                 placeholder="e.g., useState, useEffect, custom hooks"
                 rows={3}
-                className="w-full px-4 py-3 rounded-lg border border-secondary-300 dark:border-secondary-600 bg-white dark:bg-secondary-800 text-secondary-900 dark:text-secondary-100 placeholder-secondary-500 dark:placeholder-secondary-300 focus:ring-2 focus:ring-primary-500 focus:border-transparent resize-none"
+                className="w-full px-4 py-3 rounded-lg border border-secondary-300 bg-white text-secondary-900 placeholder-secondary-500 focus:ring-2 focus:ring-primary-500 focus:border-transparent resize-none"
               />
-              <p className="text-xs text-secondary-600 dark:text-secondary-100 mt-1">
+              <p className="text-xs text-secondary-600 mt-1">
                 Specify particular aspects you want the quiz to focus on
               </p>
             </div>
 
             {/* Number of Questions */}
             <div className="text-left">
-              <label className="flex items-center gap-2 text-sm font-semibold text-secondary-900 dark:text-white mb-2">
+              <label className="flex items-center gap-2 text-sm font-semibold text-secondary-900 mb-2">
                 <Hash className="w-4 h-4 text-primary-400" />
                 Number of Questions: {formData.numberOfQuestions}
               </label>
@@ -142,9 +142,9 @@ const CustomQuizGenerator = () => {
                 max="10"
                 value={formData.numberOfQuestions}
                 onChange={(e) => setFormData({ ...formData, numberOfQuestions: parseInt(e.target.value) })}
-                className="w-full h-2 bg-secondary-200 dark:bg-secondary-700 rounded-lg appearance-none cursor-pointer accent-primary-500"
+                className="w-full h-2 bg-secondary-200 rounded-lg appearance-none cursor-pointer accent-primary-500"
               />
-              <div className="flex justify-between text-xs text-secondary-600 dark:text-secondary-100 mt-1">
+              <div className="flex justify-between text-xs text-secondary-600 mt-1">
                 <span>3 questions</span>
                 <span>10 questions</span>
               </div>
@@ -170,7 +170,7 @@ const CustomQuizGenerator = () => {
             </Button>
 
             {isGenerating && (
-              <p className="text-sm text-secondary-700 dark:text-secondary-200 text-center">
+              <p className="text-sm text-secondary-700 text-center">
                 AI is creating your custom quiz. This may take a moment...
               </p>
             )}
@@ -180,10 +180,10 @@ const CustomQuizGenerator = () => {
         {/* Info Card */}
         <Card padding="md" className="mt-4">
           <div className="text-left">
-            <h3 className="font-semibold text-secondary-900 dark:text-white mb-2">
+            <h3 className="font-semibold text-secondary-900 mb-2">
               How it works
             </h3>
-            <ul className="text-sm text-secondary-700 dark:text-secondary-100 space-y-1">
+            <ul className="text-sm text-secondary-700 space-y-1">
               <li>• AI generates unique questions based on your preferences</li>
               <li>• Each quiz is saved to your profile for later access</li>
               <li>• Questions include detailed explanations</li>

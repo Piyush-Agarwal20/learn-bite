@@ -89,7 +89,7 @@ const CustomQuizTaking = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-secondary-50 dark:bg-secondary-900 flex items-center justify-center">
+      <div className="min-h-screen flex items-center justify-center">
         <div className="animate-spin rounded-full h-12 w-12 border-4 border-primary-500 border-t-transparent" />
       </div>
     );
@@ -104,22 +104,22 @@ const CustomQuizTaking = () => {
   const isCorrect = showResults && selectedAnswers[currentQuestion] === currentQ.correctAnswer;
 
   return (
-    <div className="min-h-screen bg-secondary-50 dark:bg-secondary-900">
+    <div className="min-h-screen">
       <div className="max-w-3xl mx-auto px-4 py-6 pb-24">
         {/* Header */}
         <div className="flex items-center gap-4 mb-6">
           <button
             onClick={() => navigate('/custom-quizzes')}
-            className="p-2 rounded-lg hover:bg-secondary-100 dark:hover:bg-secondary-800 transition-colors"
+            className="p-2 rounded-lg hover:bg-secondary-100 transition-colors"
           >
-            <ArrowLeft className="w-6 h-6 text-secondary-900 dark:text-secondary-100" />
+            <ArrowLeft className="w-6 h-6 text-secondary-900" />
           </button>
           <div className="text-left flex-1">
-            <h1 className="text-xl font-bold text-secondary-900 dark:text-secondary-50 flex items-center gap-2">
+            <h1 className="text-xl font-bold text-secondary-900 flex items-center gap-2">
               <Sparkles className="w-5 h-5 text-primary-500" />
               {quiz.title}
             </h1>
-            <p className="text-sm text-secondary-600 dark:text-secondary-400">
+            <p className="text-sm text-secondary-600">
               {showResults ? 'Review Your Answers' : `Question ${currentQuestion + 1} of ${quiz.questions.length}`}
             </p>
           </div>
@@ -130,18 +130,18 @@ const CustomQuizTaking = () => {
           <Card padding="lg" className="mb-6">
             <div className="text-center">
               <div className={`text-5xl font-bold mb-2 ${
-                score / quiz.questions.length >= 0.7 ? 'text-green-600 dark:text-green-400' :
-                score / quiz.questions.length >= 0.5 ? 'text-yellow-600 dark:text-yellow-400' :
-                'text-red-600 dark:text-red-400'
+                score / quiz.questions.length >= 0.7 ? 'text-green-600' :
+                score / quiz.questions.length >= 0.5 ? 'text-yellow-600' :
+                'text-red-600'
               }`}>
                 {score}/{quiz.questions.length}
               </div>
-              <p className="text-lg text-secondary-900 dark:text-secondary-100 mb-1">
+              <p className="text-lg text-secondary-900 mb-1">
                 {score / quiz.questions.length >= 0.7 ? 'Great job!' :
                  score / quiz.questions.length >= 0.5 ? 'Good effort!' :
                  'Keep practicing!'}
               </p>
-              <p className="text-sm text-secondary-600 dark:text-secondary-400 mb-4">
+              <p className="text-sm text-secondary-600 mb-4">
                 {Math.round((score / quiz.questions.length) * 100)}% correct
               </p>
               <Button onClick={handleRetake} className="mx-auto">
@@ -166,7 +166,7 @@ const CustomQuizTaking = () => {
                     ? 'bg-primary-500'
                     : selectedAnswers[index] !== -1
                     ? 'bg-primary-300 dark:bg-primary-700'
-                    : 'bg-secondary-200 dark:bg-secondary-700'
+                    : 'bg-secondary-200'
                 }`}
               />
             ))}
@@ -182,7 +182,7 @@ const CustomQuizTaking = () => {
                 Question {currentQuestion + 1}
               </span>
             </div>
-            <h2 className="text-xl font-semibold text-secondary-900 dark:text-secondary-100">
+            <h2 className="text-xl font-semibold text-secondary-900">
               {currentQ.question}
             </h2>
           </div>
@@ -193,13 +193,13 @@ const CustomQuizTaking = () => {
               const isSelected = selectedAnswers[currentQuestion] === index;
               const isCorrectAnswer = index === currentQ.correctAnswer;
 
-              let optionStyle = 'border-secondary-300 dark:border-secondary-600 bg-white dark:bg-secondary-800 hover:border-primary-300 dark:hover:border-primary-700';
+              let optionStyle = 'border-secondary-300 bg-white hover:border-primary-300 dark:hover:border-primary-700';
 
               if (showResults) {
                 if (isCorrectAnswer) {
                   optionStyle = 'border-green-500 bg-green-50 dark:bg-green-900/20';
                 } else if (isSelected && !isCorrectAnswer) {
-                  optionStyle = 'border-red-500 bg-red-50 dark:bg-red-900/20';
+                  optionStyle = 'border-red-500 bg-red-50';
                 }
               } else if (isSelected) {
                 optionStyle = 'border-primary-500 bg-primary-50 dark:bg-primary-900/20';
@@ -215,14 +215,14 @@ const CustomQuizTaking = () => {
                   }`}
                 >
                   <div className="flex items-center justify-between">
-                    <span className="text-secondary-900 dark:text-secondary-100">
+                    <span className="text-secondary-900">
                       {option}
                     </span>
                     {showResults && isCorrectAnswer && (
-                      <CheckCircle2 className="w-5 h-5 text-green-600 dark:text-green-400" />
+                      <CheckCircle2 className="w-5 h-5 text-green-600" />
                     )}
                     {showResults && isSelected && !isCorrectAnswer && (
-                      <XCircle className="w-5 h-5 text-red-600 dark:text-red-400" />
+                      <XCircle className="w-5 h-5 text-red-600" />
                     )}
                   </div>
                 </button>
@@ -235,12 +235,12 @@ const CustomQuizTaking = () => {
             <div className={`p-4 rounded-lg ${
               isCorrect
                 ? 'bg-green-50 dark:bg-green-900/20 border-l-4 border-green-500'
-                : 'bg-red-50 dark:bg-red-900/20 border-l-4 border-red-500'
+                : 'bg-red-50 border-l-4 border-red-500'
             }`}>
-              <p className="font-semibold text-secondary-900 dark:text-secondary-100 mb-1 text-left">
+              <p className="font-semibold text-secondary-900 mb-1 text-left">
                 {isCorrect ? 'Correct!' : 'Incorrect'}
               </p>
-              <p className="text-sm text-secondary-700 dark:text-secondary-300 text-left">
+              <p className="text-sm text-secondary-700 text-left">
                 {currentQ.explanation}
               </p>
             </div>
