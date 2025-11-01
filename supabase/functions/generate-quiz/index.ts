@@ -34,12 +34,15 @@ serve(async (req) => {
       throw new Error('OPENAI_API_KEY is not set')
     }
 
-    // Verify authentication
+    // Verify authentication - check for Authorization header
     const authHeader = req.headers.get('Authorization')
+    console.log('Auth header present:', !!authHeader)
+
     if (!authHeader) {
-      throw new Error('No authorization header')
+      throw new Error('No authorization header provided')
     }
 
+    // Create Supabase client with auth
     const supabaseClient = createClient(
       Deno.env.get('SUPABASE_URL') ?? '',
       Deno.env.get('SUPABASE_ANON_KEY') ?? '',
@@ -56,9 +59,17 @@ serve(async (req) => {
       error: userError,
     } = await supabaseClient.auth.getUser()
 
-    if (userError || !user) {
-      throw new Error('Unauthorized')
+    console.log('User auth result:', { user: !!user, error: userError?.message })
+
+    if (userError) {
+      throw new Error(`Authentication failed: ${userError.message}`)
     }
+
+    if (!user) {
+      throw new Error('User not authenticated - please log in again')
+    }
+
+    console.log('User authenticated:', user.id)
 
     // Parse request body
     const params: QuizGenerationParams = await req.json()
