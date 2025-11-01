@@ -30,7 +30,8 @@ const CustomQuizGenerator = () => {
 
       if (error) {
         console.error('Error generating quiz:', error);
-        alert('Failed to generate quiz. Please try again.');
+        const errorMessage = error.message || 'Failed to generate quiz. Please try again.';
+        alert(errorMessage);
         return;
       }
 
@@ -38,9 +39,10 @@ const CustomQuizGenerator = () => {
         // Navigate to the quiz page
         navigate(`/custom-quiz/${data.id}`);
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error:', error);
-      alert('Failed to generate quiz. Please try again.');
+      const errorMessage = error?.message || 'Failed to generate quiz. Please check your connection and try again.';
+      alert(errorMessage);
     } finally {
       setIsGenerating(false);
     }
@@ -99,10 +101,10 @@ const CustomQuizGenerator = () => {
                     key={level}
                     type="button"
                     onClick={() => setFormData({ ...formData, level })}
-                    className={`px-4 py-3 rounded-lg border-2 font-medium transition-all ${
+                    className={`px-4 py-3 rounded-lg border-2 font-semibold transition-all ${
                       formData.level === level
-                        ? 'border-primary-500 bg-primary-50 dark:bg-primary-900/20 text-primary-700 dark:text-primary-300'
-                        : 'border-secondary-300 dark:border-secondary-600 bg-white dark:bg-secondary-800 text-secondary-700 dark:text-secondary-300 hover:border-primary-300 dark:hover:border-primary-700'
+                        ? 'border-primary-600 bg-primary-600 text-white'
+                        : 'border-secondary-300 dark:border-secondary-600 bg-white dark:bg-secondary-800 text-secondary-900 dark:text-secondary-100 hover:border-primary-400'
                     }`}
                   >
                     {level}

@@ -23,7 +23,7 @@ export async function createCustomQuiz(params: QuizGenerationParams) {
   }
 
   try {
-    // Generate questions using OpenAI
+    // Generate questions using OpenAI Edge Function
     const questions = await generateQuizQuestions(params);
 
     // Save to database
@@ -42,7 +42,11 @@ export async function createCustomQuiz(params: QuizGenerationParams) {
 
     return { data: data as CustomQuiz | null, error };
   } catch (error: any) {
-    return { data: null, error };
+    console.error('createCustomQuiz error:', error);
+    return {
+      data: null,
+      error: error instanceof Error ? error : new Error(error?.message || 'Failed to create quiz')
+    };
   }
 }
 

@@ -5,6 +5,5 @@ import react from '@vitejs/plugin-react'
 export default defineConfig({
   plugins: [react()],
   // GitHub Pages deploys to https://<username>.github.io/<repo>/
-  // Set base to your repository name for GitHub Pages deployment
-  base: process.env.GITHUB_PAGES === 'true' ? '/learn-bite/' : '/',
+  base: '/learn-bite/',
 })
