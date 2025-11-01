@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { BrowserRouter, Routes, Route, useNavigate, useLocation, Navigate } from 'react-router-dom';
+import { HashRouter, Routes, Route, useNavigate, useLocation, Navigate } from 'react-router-dom';
 import './App.css';
 import { MainLayout } from './components';
 import type { NavItem } from './components';
@@ -151,7 +151,7 @@ function ProtectedAppLayout() {
 // Main App Component with Router
 function App() {
   return (
-    <BrowserRouter>
+    <HashRouter>
       <ThemeProvider>
         <AuthProvider>
           <Routes>
@@ -162,7 +162,7 @@ function App() {
           </Routes>
         </AuthProvider>
       </ThemeProvider>
-    </BrowserRouter>
+    </HashRouter>
   );
 }
 
