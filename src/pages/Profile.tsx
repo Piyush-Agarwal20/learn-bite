@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Card, Button, PageContainer, LoadingSpinner } from '../components';
 import { useAuth } from '../contexts/AuthContext';
-import { useTheme } from '../contexts/ThemeContext';
+import { useThemeStore } from '../stores/themeStore';
 import { getUserStats } from '../services/api/progress';
 import { getProfile, updateProfile, type Profile as ProfileType } from '../services/api';
 import type { UserStats } from '../types';
@@ -11,7 +11,7 @@ import { User, Mail, Bell, Book, Award, LogOut, Edit2, Check, X, Bookmark } from
 const Profile = () => {
   const navigate = useNavigate();
   const { user, signOut } = useAuth();
-  const { theme, toggleTheme } = useTheme();
+  const { theme, toggleTheme } = useThemeStore();
   const [profile, setProfile] = useState<ProfileType | null>(null);
   const [stats, setStats] = useState<UserStats | null>(null);
   const [loading, setLoading] = useState(true);
@@ -107,7 +107,7 @@ const Profile = () => {
                 type="text"
                 value={editedName}
                 onChange={(e) => setEditedName(e.target.value)}
-                className="text-2xl font-bold text-secondary-900 text-left border-2 border-primary-500 rounded-lg px-3 py-1 focus:outline-none focus:ring-2 focus:ring-primary-500"
+                className="text-2xl font-bold text-secondary-900 theme-text-primary dark:text-secondary-100 text-left border-2 border-primary-500 rounded-lg px-3 py-1 focus:outline-none focus:ring-2 focus:ring-primary-500"
                 autoFocus
                 disabled={saving}
               />
@@ -128,7 +128,7 @@ const Profile = () => {
             </div>
           ) : (
             <div className="flex items-center gap-2 mb-2">
-              <h1 className="text-2xl font-bold text-secondary-900">{displayName}</h1>
+              <h1 className="text-2xl font-bold text-secondary-900 theme-text-primary dark:text-secondary-100">{displayName}</h1>
               <button
                 onClick={() => setIsEditingName(true)}
                 className="p-1 text-primary-600 hover:bg-primary-50 rounded-lg transition-colors"
@@ -139,7 +139,7 @@ const Profile = () => {
             </div>
           )}
 
-          <p className="text-secondary-600 flex items-center gap-2">
+          <p className="text-secondary-600 theme-text-secondary flex items-center gap-2">
             <Mail className="w-4 h-4" />
             {email}
           </p>
@@ -150,37 +150,37 @@ const Profile = () => {
           <Card padding="md" variant="elevated" className="text-left">
             <Book className="w-8 h-8 text-primary-600 mb-2" />
             <p className="text-2xl font-bold text-primary-600">{stats?.completedLessons || 0}</p>
-            <p className="text-xs text-secondary-600 mt-1">Lessons</p>
+            <p className="text-xs text-secondary-600 theme-text-secondary mt-1">Lessons</p>
           </Card>
           <Card padding="md" variant="elevated" className="text-left">
             <Award className="w-8 h-8 text-accent-600 mb-2" />
             <p className="text-2xl font-bold text-accent-600">{stats?.currentStreak || 0}</p>
-            <p className="text-xs text-secondary-600 mt-1">Day Streak</p>
+            <p className="text-xs text-secondary-600 theme-text-secondary mt-1">Day Streak</p>
           </Card>
           <Card padding="md" variant="elevated" className="text-left">
             <div className="text-3xl mb-2">📊</div>
-            <p className="text-2xl font-bold text-secondary-600">{stats?.progressPercentage || 0}%</p>
-            <p className="text-xs text-secondary-600 mt-1">Progress</p>
+            <p className="text-2xl font-bold text-secondary-600 theme-text-secondary dark:text-secondary-400">{stats?.progressPercentage || 0}%</p>
+            <p className="text-xs text-secondary-600 theme-text-secondary mt-1">Progress</p>
           </Card>
         </div>
 
         {/* Account Info */}
         <Card padding="lg">
-          <h2 className="text-xl font-bold text-secondary-900 mb-4 flex items-center gap-2">
+          <h2 className="text-xl font-bold text-secondary-900 theme-text-primary dark:text-secondary-100 mb-4 flex items-center gap-2">
             <User className="w-5 h-5" />
             Account Information
           </h2>
           <div className="space-y-3 text-left">
             {/* Editable Full Name */}
-            <div className="p-3 bg-secondary-50 rounded-lg text-left">
-              <p className="text-sm text-secondary-600 text-left mb-1">Full Name</p>
+            <div className="p-3 bg-secondary-50 dark:bg-secondary-800 dark:bg-secondary-800 rounded-lg text-left">
+              <p className="text-sm text-secondary-600 theme-text-secondary text-left mb-1">Full Name</p>
               {isEditingName ? (
                 <div className="flex items-center gap-2">
                   <input
                     type="text"
                     value={editedName}
                     onChange={(e) => setEditedName(e.target.value)}
-                    className="flex-1 font-semibold text-secondary-900 bg-white border-2 border-primary-500 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary-500"
+                    className="flex-1 font-semibold text-secondary-900 theme-text-primary dark:text-secondary-100 bg-white border-2 border-primary-500 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary-500"
                     autoFocus
                     disabled={saving}
                   />
@@ -203,7 +203,7 @@ const Profile = () => {
                 </div>
               ) : (
                 <div className="flex items-center justify-between">
-                  <p className="font-semibold text-secondary-900 text-left">{displayName}</p>
+                  <p className="font-semibold text-secondary-900 theme-text-primary dark:text-secondary-100 text-left">{displayName}</p>
                   <button
                     onClick={() => setIsEditingName(true)}
                     className="p-2 text-primary-600 hover:bg-white rounded-lg transition-colors"
@@ -215,28 +215,28 @@ const Profile = () => {
               )}
             </div>
 
-            <div className="p-3 bg-secondary-50 rounded-lg text-left">
-              <p className="text-sm text-secondary-600 text-left">Email</p>
-              <p className="font-semibold text-secondary-900 text-left">{email}</p>
+            <div className="p-3 bg-secondary-50 dark:bg-secondary-800 dark:bg-secondary-800 rounded-lg text-left">
+              <p className="text-sm text-secondary-600 theme-text-secondary text-left">Email</p>
+              <p className="font-semibold text-secondary-900 theme-text-primary dark:text-secondary-100 text-left">{email}</p>
             </div>
-            <div className="p-3 bg-secondary-50 rounded-lg text-left">
-              <p className="text-sm text-secondary-600 text-left">Member Since</p>
-              <p className="font-semibold text-secondary-900 text-left">{memberSince}</p>
+            <div className="p-3 bg-secondary-50 dark:bg-secondary-800 dark:bg-secondary-800 rounded-lg text-left">
+              <p className="text-sm text-secondary-600 theme-text-secondary text-left">Member Since</p>
+              <p className="font-semibold text-secondary-900 theme-text-primary dark:text-secondary-100 text-left">{memberSince}</p>
             </div>
           </div>
         </Card>
 
         {/* Notification Settings */}
         <Card padding="lg">
-          <h2 className="text-xl font-bold text-secondary-900 mb-4 flex items-center gap-2">
+          <h2 className="text-xl font-bold text-secondary-900 theme-text-primary dark:text-secondary-100 mb-4 flex items-center gap-2">
             <Bell className="w-5 h-5" />
             Notifications
           </h2>
           <div className="space-y-4">
             <div className="flex items-center justify-between">
               <div>
-                <p className="font-semibold text-secondary-900">Push Notifications</p>
-                <p className="text-sm text-secondary-600">Get notified about your progress</p>
+                <p className="font-semibold text-secondary-900 theme-text-primary dark:text-secondary-100">Push Notifications</p>
+                <p className="text-sm text-secondary-600 theme-text-secondary dark:text-secondary-400">Get notified about your progress</p>
               </div>
               <button
                 onClick={() => setNotifications(!notifications)}
@@ -254,8 +254,8 @@ const Profile = () => {
 
             <div className="flex items-center justify-between">
               <div>
-                <p className="font-semibold text-secondary-900">Daily Reminder</p>
-                <p className="text-sm text-secondary-600">Remind me to learn every day</p>
+                <p className="font-semibold text-secondary-900 theme-text-primary dark:text-secondary-100">Daily Reminder</p>
+                <p className="text-sm text-secondary-600 theme-text-secondary dark:text-secondary-400">Remind me to learn every day</p>
               </div>
               <button
                 onClick={() => setDailyReminder(!dailyReminder)}
@@ -275,51 +275,51 @@ const Profile = () => {
 
         {/* Quick Actions */}
         <Card padding="lg">
-          <h2 className="text-xl font-bold text-secondary-900 mb-4 text-left">Quick Actions</h2>
+          <h2 className="text-xl font-bold text-secondary-900 theme-text-primary dark:text-secondary-100 mb-4 text-left">Quick Actions</h2>
           <div className="grid grid-cols-2 gap-3">
             <button
               onClick={() => navigate('/bookmarks')}
-              className="p-4 bg-secondary-50 rounded-lg hover:bg-secondary-100 transition-colors text-left"
+              className="p-4 bg-secondary-50 dark:bg-secondary-800 dark:bg-secondary-800 rounded-lg hover:bg-secondary-100 dark:bg-secondary-700 transition-colors text-left"
             >
               <Bookmark className="w-6 h-6 text-yellow-600 mb-2" />
-              <p className="font-semibold text-secondary-900 text-sm">Bookmarks</p>
-              <p className="text-xs text-secondary-600 mt-1">View saved lessons</p>
+              <p className="font-semibold text-secondary-900 theme-text-primary dark:text-secondary-100 text-sm">Bookmarks</p>
+              <p className="text-xs text-secondary-600 theme-text-secondary mt-1">View saved lessons</p>
             </button>
             <button
               onClick={() => navigate('/topics')}
-              className="p-4 bg-secondary-50 rounded-lg hover:bg-secondary-100 transition-colors text-left"
+              className="p-4 bg-secondary-50 dark:bg-secondary-800 dark:bg-secondary-800 rounded-lg hover:bg-secondary-100 dark:bg-secondary-700 transition-colors text-left"
             >
               <Book className="w-6 h-6 text-primary-600 mb-2" />
-              <p className="font-semibold text-secondary-900 text-sm">Browse Topics</p>
-              <p className="text-xs text-secondary-600 mt-1">Explore courses</p>
+              <p className="font-semibold text-secondary-900 theme-text-primary dark:text-secondary-100 text-sm">Browse Topics</p>
+              <p className="text-xs text-secondary-600 theme-text-secondary mt-1">Explore courses</p>
             </button>
           </div>
         </Card>
 
         {/* Learning Preferences */}
         <Card padding="lg">
-          <h2 className="text-xl font-bold text-secondary-900 mb-4 text-left">Learning Preferences</h2>
+          <h2 className="text-xl font-bold text-secondary-900 theme-text-primary dark:text-secondary-100 mb-4 text-left">Learning Preferences</h2>
           <div className="space-y-3 text-left">
-            <div className="p-3 bg-secondary-50 rounded-lg text-left">
-              <p className="font-semibold text-secondary-900 text-left">Difficulty Level</p>
-              <p className="text-sm text-secondary-600 text-left">Intermediate</p>
+            <div className="p-3 bg-secondary-50 dark:bg-secondary-800 dark:bg-secondary-800 rounded-lg text-left">
+              <p className="font-semibold text-secondary-900 theme-text-primary dark:text-secondary-100 text-left">Difficulty Level</p>
+              <p className="text-sm text-secondary-600 theme-text-secondary text-left">Intermediate</p>
             </div>
-            <div className="p-3 bg-secondary-50 rounded-lg text-left">
-              <p className="font-semibold text-secondary-900 text-left">Learning Goals</p>
-              <p className="text-sm text-secondary-600 text-left">Career Development</p>
+            <div className="p-3 bg-secondary-50 dark:bg-secondary-800 dark:bg-secondary-800 rounded-lg text-left">
+              <p className="font-semibold text-secondary-900 theme-text-primary dark:text-secondary-100 text-left">Learning Goals</p>
+              <p className="text-sm text-secondary-600 theme-text-secondary text-left">Career Development</p>
             </div>
           </div>
         </Card>
 
         {/* App Settings */}
         <Card padding="lg">
-          <h2 className="text-xl font-bold text-secondary-900 mb-4 text-left">App Settings</h2>
+          <h2 className="text-xl font-bold text-secondary-900 theme-text-primary dark:text-secondary-100 mb-4 text-left">App Settings</h2>
           <div className="space-y-4">
             {/* Theme Toggle */}
             <div className="flex items-center justify-between">
               <div className="text-left">
-                <p className="font-semibold text-secondary-900">Theme</p>
-                <p className="text-sm text-secondary-600">{theme === 'dark' ? 'Dark Mode' : 'Light Mode'}</p>
+                <p className="font-semibold text-secondary-900 theme-text-primary dark:text-secondary-100">Theme</p>
+                <p className="text-sm text-secondary-600 theme-text-secondary dark:text-secondary-400">{theme === 'dark' ? 'Dark Mode' : 'Light Mode'}</p>
               </div>
               <button
                 onClick={toggleTheme}
@@ -335,9 +335,9 @@ const Profile = () => {
               </button>
             </div>
 
-            <div className="p-3 bg-secondary-50 rounded-lg text-left">
-              <p className="font-semibold text-secondary-900 text-left">Language</p>
-              <p className="text-sm text-secondary-600 text-left">English</p>
+            <div className="p-3 bg-secondary-50 dark:bg-secondary-800 dark:bg-secondary-800 rounded-lg text-left">
+              <p className="font-semibold text-secondary-900 theme-text-primary dark:text-secondary-100 text-left">Language</p>
+              <p className="text-sm text-secondary-600 theme-text-secondary text-left">English</p>
             </div>
           </div>
         </Card>

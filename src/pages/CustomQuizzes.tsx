@@ -54,7 +54,7 @@ const CustomQuizzes = () => {
       case 'Advanced':
         return 'text-red-600 bg-red-50';
       default:
-        return 'text-secondary-600 bg-secondary-50';
+        return 'text-secondary-600 bg-secondary-50 dark:bg-secondary-800';
     }
   };
 
@@ -68,14 +68,14 @@ const CustomQuizzes = () => {
               onClick={() => navigate(-1)}
               className="p-2 rounded-lg hover:bg-secondary-100 transition-colors"
             >
-              <ArrowLeft className="w-6 h-6 text-secondary-900" />
+              <ArrowLeft className="w-6 h-6 text-secondary-900 theme-text-primary dark:text-secondary-100" />
             </button>
             <div className="text-left">
-              <h1 className="text-2xl font-bold text-secondary-900 flex items-center gap-2">
+              <h1 className="text-2xl font-bold text-secondary-900 theme-text-primary flex items-center gap-2">
                 <Sparkles className="w-6 h-6 text-primary-500" />
                 My AI Quizzes
               </h1>
-              <p className="text-sm text-secondary-600">
+              <p className="text-sm text-secondary-600 theme-text-secondary dark:text-secondary-400">
                 {quizzes.length} custom {quizzes.length === 1 ? 'quiz' : 'quizzes'}
               </p>
             </div>
@@ -101,10 +101,10 @@ const CustomQuizzes = () => {
         {!loading && quizzes.length === 0 && (
           <Card padding="lg" className="text-center">
             <Sparkles className="w-16 h-16 text-primary-500 mx-auto mb-4" />
-            <h3 className="text-xl font-semibold text-secondary-900 mb-2">
+            <h3 className="text-xl font-semibold text-secondary-900 theme-text-primary mb-2">
               No Custom Quizzes Yet
             </h3>
-            <p className="text-secondary-600 mb-6">
+            <p className="text-secondary-600 theme-text-secondary mb-6">
               Create your first AI-generated quiz to get started
             </p>
             <Button onClick={() => navigate('/quiz-generator')}>
@@ -128,7 +128,7 @@ const CustomQuizzes = () => {
                   <div className="flex-1 text-left">
                     <div className="flex items-center gap-2 mb-2">
                       <BookOpen className="w-5 h-5 text-primary-500" />
-                      <h3 className="text-lg font-semibold text-secondary-900">
+                      <h3 className="text-lg font-semibold text-secondary-900 theme-text-primary dark:text-secondary-100">
                         {quiz.title}
                       </h3>
                     </div>
@@ -138,18 +138,18 @@ const CustomQuizzes = () => {
                         <Target className="w-3 h-3 inline mr-1" />
                         {quiz.level}
                       </span>
-                      <span className="text-sm text-secondary-600">
+                      <span className="text-sm text-secondary-600 theme-text-secondary dark:text-secondary-400">
                         {quiz.questions.length} questions
                       </span>
                     </div>
 
                     {quiz.focus_areas && (
-                      <p className="text-sm text-secondary-600 mb-2">
+                      <p className="text-sm text-secondary-600 theme-text-secondary mb-2">
                         Focus: {quiz.focus_areas}
                       </p>
                     )}
 
-                    <div className="flex items-center gap-2 text-xs text-secondary-500">
+                    <div className="flex items-center gap-2 text-xs text-secondary-500 theme-text-tertiary dark:text-secondary-400">
                       <Clock className="w-3 h-3" />
                       Created {formatDate(quiz.created_at)}
                     </div>

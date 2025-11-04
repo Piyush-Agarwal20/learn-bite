@@ -113,14 +113,14 @@ const CustomQuizTaking = () => {
             className="p-2 rounded-lg hover:bg-secondary-100 active:bg-secondary-200 transition-colors touch-manipulation flex-shrink-0"
             aria-label="Back to quizzes"
           >
-            <ArrowLeft className="w-5 h-5 sm:w-6 sm:h-6 text-secondary-900" />
+            <ArrowLeft className="w-5 h-5 sm:w-6 sm:h-6 text-secondary-900 theme-text-primary dark:text-secondary-100" />
           </button>
           <div className="text-left flex-1 min-w-0">
-            <h1 className="text-lg sm:text-xl font-bold text-secondary-900 flex items-center gap-2">
+            <h1 className="text-lg sm:text-xl font-bold text-secondary-900 theme-text-primary flex items-center gap-2">
               <Sparkles className="w-4 h-4 sm:w-5 sm:h-5 text-primary-500 flex-shrink-0" />
               <span className="truncate">{quiz.title}</span>
             </h1>
-            <p className="text-xs sm:text-sm text-secondary-600">
+            <p className="text-xs sm:text-sm text-secondary-600 theme-text-secondary dark:text-secondary-400">
               {showResults ? 'Review Your Answers' : `Question ${currentQuestion + 1} of ${quiz.questions.length}`}
             </p>
           </div>
@@ -137,12 +137,12 @@ const CustomQuizTaking = () => {
               }`}>
                 {score}/{quiz.questions.length}
               </div>
-              <p className="text-base sm:text-lg text-secondary-900 mb-1">
+              <p className="text-base sm:text-lg text-secondary-900 theme-text-primary mb-1">
                 {score / quiz.questions.length >= 0.7 ? 'Great job!' :
                  score / quiz.questions.length >= 0.5 ? 'Good effort!' :
                  'Keep practicing!'}
               </p>
-              <p className="text-xs sm:text-sm text-secondary-600 mb-4">
+              <p className="text-xs sm:text-sm text-secondary-600 theme-text-secondary mb-4">
                 {Math.round((score / quiz.questions.length) * 100)}% correct
               </p>
               <Button onClick={handleRetake} className="mx-auto touch-manipulation">
@@ -183,7 +183,7 @@ const CustomQuizTaking = () => {
                 Question {currentQuestion + 1}
               </span>
             </div>
-            <h2 className="text-lg sm:text-xl font-semibold text-secondary-900">
+            <h2 className="text-lg sm:text-xl font-semibold text-secondary-900 theme-text-primary dark:text-secondary-100">
               {currentQ.question}
             </h2>
           </div>
@@ -216,7 +216,7 @@ const CustomQuizTaking = () => {
                   }`}
                 >
                   <div className="flex items-center justify-between gap-2">
-                    <span className="text-sm sm:text-base text-secondary-900 flex-1">
+                    <span className="text-sm sm:text-base text-secondary-900 theme-text-primary flex-1">
                       {option}
                     </span>
                     {showResults && isCorrectAnswer && (
@@ -238,7 +238,7 @@ const CustomQuizTaking = () => {
                 ? 'bg-green-50 border-l-4 border-green-500'
                 : 'bg-red-50 border-l-4 border-red-500'
             }`}>
-              <p className="font-semibold text-sm sm:text-base text-secondary-900 mb-1 text-left">
+              <p className="font-semibold text-sm sm:text-base text-secondary-900 theme-text-primary mb-1 text-left">
                 {isCorrect ? 'Correct!' : 'Incorrect'}
               </p>
               <p className="text-xs sm:text-sm text-secondary-700 text-left">

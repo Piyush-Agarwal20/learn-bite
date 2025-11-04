@@ -22,7 +22,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({
   className = '',
 }) => {
   return (
-    <div className="min-h-screen bg-secondary-50 flex flex-col">
+    <div className="min-h-screen theme-bg-primary flex flex-col" style={{ backgroundColor: 'var(--bg-primary)' }}>
       {showHeader && header && <Header {...header} />}
 
       <main

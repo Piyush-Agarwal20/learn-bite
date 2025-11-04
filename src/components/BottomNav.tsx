@@ -22,7 +22,8 @@ const BottomNav: React.FC<BottomNavProps> = ({
 }) => {
   return (
     <nav
-      className={`fixed bottom-0 left-0 right-0 bg-white border-t-2 border-secondary-200 shadow-lg z-50 ${className}`}
+      className={`fixed bottom-0 left-0 right-0 theme-card-bg theme-border border-t-2 shadow-lg z-50 ${className}`}
+      style={{ backgroundColor: 'var(--card-bg)', borderColor: 'var(--border-color)' }}
     >
       <div className="flex items-center justify-around max-w-screen-xl mx-auto">
         {items.map((item) => {
@@ -33,8 +34,8 @@ const BottomNav: React.FC<BottomNavProps> = ({
               onClick={() => onItemClick(item.id)}
               className={`flex flex-col items-center justify-center py-3 px-4 min-w-[80px] min-h-[60px] transition-all duration-200 ${
                 isActive
-                  ? 'text-primary-600'
-                  : 'text-secondary-400 hover:text-secondary-600'
+                  ? 'text-primary-600 dark:text-primary-400'
+                  : 'text-secondary-400 dark:text-secondary-500 hover:text-secondary-600 dark:hover:text-secondary-300'
               }`}
               aria-label={item.label}
               aria-current={isActive ? 'page' : undefined}

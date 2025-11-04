@@ -17,7 +17,7 @@ const Header: React.FC<HeaderProps> = ({
 }) => {
   return (
     <header
-      className={`sticky top-0 z-40 bg-white border-b-2 border-secondary-200 shadow-sm ${className}`}
+      className={`sticky top-0 z-40 bg-white border-b-2 border-secondary-200 dark:border-secondary-700 shadow-sm ${className}`}
     >
       <div className="flex items-center justify-between px-4 py-3 max-w-screen-xl mx-auto min-h-[60px]">
         {/* Left section */}
@@ -25,7 +25,7 @@ const Header: React.FC<HeaderProps> = ({
           {showBackButton && (
             <button
               onClick={onBackClick}
-              className="p-2 -ml-2 text-secondary-600 hover:text-secondary-900 hover:bg-secondary-100 rounded-lg transition-all min-w-[44px] min-h-[44px] flex items-center justify-center"
+              className="p-2 -ml-2 text-secondary-600 hover:text-secondary-900 hover:bg-secondary-100 dark:hover:bg-secondary-700 dark:bg-secondary-700 rounded-lg transition-all min-w-[44px] min-h-[44px] flex items-center justify-center"
               aria-label="Go back"
             >
               <svg
@@ -44,7 +44,7 @@ const Header: React.FC<HeaderProps> = ({
             </button>
           )}
           {title && (
-            <h1 className="text-xl font-bold text-secondary-900">{title}</h1>
+            <h1 className="text-xl font-bold text-secondary-900 dark:text-secondary-100">{title}</h1>
           )}
         </div>
 

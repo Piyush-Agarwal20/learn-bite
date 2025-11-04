@@ -89,10 +89,10 @@ const Home = () => {
       <div className="space-y-6 py-4 pb-24">
         {/* Welcome Header */}
         <div className="text-left">
-          <h1 className="text-3xl font-bold text-secondary-900">
+          <h1 className="text-3xl font-bold text-secondary-900 theme-text-primary dark:text-secondary-100">
             Welcome back, {userName}! 👋
           </h1>
-          <p className="text-secondary-600 mt-1">Ready to learn something new?</p>
+          <p className="text-secondary-600 theme-text-secondary mt-1">Ready to learn something new?</p>
         </div>
 
         {/* Streak Counter - Prominent */}
@@ -111,15 +111,15 @@ const Home = () => {
         <div className="grid grid-cols-3 gap-3">
           <Card padding="md" className="text-left">
             <p className="text-2xl font-bold text-primary-600">{lessonsCompleted}</p>
-            <p className="text-xs text-secondary-600 mt-1">Lessons</p>
+            <p className="text-xs text-secondary-600 theme-text-secondary mt-1">Lessons</p>
           </Card>
           <Card padding="md" className="text-left">
             <p className="text-2xl font-bold text-accent-600">{currentStreak}</p>
-            <p className="text-xs text-secondary-600 mt-1">Day Streak</p>
+            <p className="text-xs text-secondary-600 theme-text-secondary mt-1">Day Streak</p>
           </Card>
           <Card padding="md" className="text-left">
-            <p className="text-2xl font-bold text-secondary-600">{progressPercentage}%</p>
-            <p className="text-xs text-secondary-600 mt-1">Progress</p>
+            <p className="text-2xl font-bold text-secondary-600 theme-text-secondary dark:text-secondary-400">{progressPercentage}%</p>
+            <p className="text-xs text-secondary-600 theme-text-secondary mt-1">Progress</p>
           </Card>
         </div>
 
@@ -128,7 +128,7 @@ const Home = () => {
           <Card padding="lg" variant="elevated">
             <div className="flex items-center gap-2 mb-3">
               <BookOpen className="w-5 h-5 text-primary-600" />
-              <h2 className="text-xl font-bold text-secondary-900 text-left">Continue Learning</h2>
+              <h2 className="text-xl font-bold text-secondary-900 theme-text-primary text-left">Continue Learning</h2>
             </div>
             <div
               className="p-4 bg-primary-50 rounded-lg cursor-pointer hover:bg-primary-100 transition-colors"
@@ -137,13 +137,13 @@ const Home = () => {
               <div className="flex items-start justify-between mb-2">
                 <div className="text-left flex-1">
                   <p className="text-sm text-primary-600 font-medium">{continueLearning.topic.title}</p>
-                  <h3 className="text-lg font-bold text-secondary-900 mt-1">{continueLearning.lesson.title}</h3>
+                  <h3 className="text-lg font-bold text-secondary-900 theme-text-primary mt-1">{continueLearning.lesson.title}</h3>
                   <div className="flex items-center gap-3 mt-2">
-                    <span className="text-xs text-secondary-600 flex items-center gap-1">
+                    <span className="text-xs text-secondary-600 theme-text-secondary flex items-center gap-1">
                       <Clock className="w-3 h-3" />
                       {continueLearning.lesson.estimated_read_time} min
                     </span>
-                    <span className="text-xs text-secondary-600">
+                    <span className="text-xs text-secondary-600 theme-text-secondary dark:text-secondary-400">
                       {continueLearning.completedCount}/{continueLearning.totalCount} lessons complete
                     </span>
                   </div>
@@ -163,7 +163,7 @@ const Home = () => {
           <div>
             <div className="flex items-center gap-2 mb-3">
               <TrendingUp className="w-5 h-5 text-accent-600" />
-              <h2 className="text-xl font-bold text-secondary-900 text-left">Recommended for You</h2>
+              <h2 className="text-xl font-bold text-secondary-900 theme-text-primary text-left">Recommended for You</h2>
             </div>
             <div className="space-y-3">
               {recommendedTopics.map((topic) => (
@@ -179,21 +179,21 @@ const Home = () => {
                     <div className="flex-1 text-left">
                       <div className="flex items-start justify-between mb-1">
                         <div>
-                          <h3 className="font-bold text-secondary-900">{topic.title}</h3>
-                          <p className="text-xs text-secondary-500">{topic.category}</p>
+                          <h3 className="font-bold text-secondary-900 theme-text-primary dark:text-secondary-100">{topic.title}</h3>
+                          <p className="text-xs text-secondary-500 theme-text-tertiary dark:text-secondary-400">{topic.category}</p>
                         </div>
                         <span className="text-xs px-2 py-1 bg-secondary-100 text-secondary-700 rounded-full">
                           {topic.difficulty}
                         </span>
                       </div>
-                      <p className="text-sm text-secondary-600 mt-1 line-clamp-2">{topic.description}</p>
+                      <p className="text-sm text-secondary-600 theme-text-secondary mt-1 line-clamp-2">{topic.description}</p>
                       <div className="mt-2 flex items-center gap-2">
                         <ProgressBar progress={topic.progress} color="accent" />
-                        <span className="text-xs text-secondary-600 whitespace-nowrap">
+                        <span className="text-xs text-secondary-600 theme-text-secondary whitespace-nowrap">
                           {topic.progress}%
                         </span>
                       </div>
-                      <p className="text-xs text-secondary-500 mt-1">{topic.lessonCount} lessons</p>
+                      <p className="text-xs text-secondary-500 theme-text-tertiary mt-1">{topic.lessonCount} lessons</p>
                     </div>
                   </div>
                 </Card>
@@ -206,23 +206,23 @@ const Home = () => {
         <div className="grid grid-cols-2 gap-3">
           <Card hoverable clickable padding="md" className="text-left" onClick={() => navigate('/topics')}>
             <div className="text-3xl mb-2">📖</div>
-            <p className="font-semibold text-secondary-900">Browse Topics</p>
-            <p className="text-xs text-secondary-600 mt-1">Explore all courses</p>
+            <p className="font-semibold text-secondary-900 theme-text-primary dark:text-secondary-100">Browse Topics</p>
+            <p className="text-xs text-secondary-600 theme-text-secondary mt-1">Explore all courses</p>
           </Card>
           <Card hoverable clickable padding="md" className="text-left" onClick={() => navigate('/progress')}>
             <div className="text-3xl mb-2">📊</div>
-            <p className="font-semibold text-secondary-900">View Progress</p>
-            <p className="text-xs text-secondary-600 mt-1">Track your journey</p>
+            <p className="font-semibold text-secondary-900 theme-text-primary dark:text-secondary-100">View Progress</p>
+            <p className="text-xs text-secondary-600 theme-text-secondary mt-1">Track your journey</p>
           </Card>
           <Card hoverable clickable padding="md" className="text-left" onClick={() => navigate('/quiz-generator')}>
             <div className="text-3xl mb-2">✨</div>
-            <p className="font-semibold text-secondary-900">AI Quiz Generator</p>
-            <p className="text-xs text-secondary-600 mt-1">Create custom quizzes</p>
+            <p className="font-semibold text-secondary-900 theme-text-primary dark:text-secondary-100">AI Quiz Generator</p>
+            <p className="text-xs text-secondary-600 theme-text-secondary mt-1">Create custom quizzes</p>
           </Card>
           <Card hoverable clickable padding="md" className="text-left" onClick={() => navigate('/custom-quizzes')}>
             <div className="text-3xl mb-2">🎯</div>
-            <p className="font-semibold text-secondary-900">My Quizzes</p>
-            <p className="text-xs text-secondary-600 mt-1">View saved quizzes</p>
+            <p className="font-semibold text-secondary-900 theme-text-primary dark:text-secondary-100">My Quizzes</p>
+            <p className="text-xs text-secondary-600 theme-text-secondary mt-1">View saved quizzes</p>
           </Card>
         </div>
 
@@ -231,8 +231,8 @@ const Home = () => {
           <Card padding="lg" className="text-left">
             <div className="text-center py-8">
               <div className="text-6xl mb-4">🚀</div>
-              <h3 className="text-xl font-bold text-secondary-900 mb-2">Start Your Learning Journey!</h3>
-              <p className="text-secondary-600 mb-4">Explore topics and begin learning today</p>
+              <h3 className="text-xl font-bold text-secondary-900 theme-text-primary mb-2">Start Your Learning Journey!</h3>
+              <p className="text-secondary-600 theme-text-secondary mb-4">Explore topics and begin learning today</p>
               <Button onClick={() => navigate('/topics')} variant="primary" size="lg">
                 Browse Topics
               </Button>

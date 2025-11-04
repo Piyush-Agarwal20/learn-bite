@@ -96,7 +96,7 @@ const Flashcards = () => {
         <div className="space-y-6 py-4">
           <button
             onClick={() => navigate(-1)}
-            className="flex items-center gap-2 text-secondary-600 hover:text-secondary-900 transition-colors"
+            className="flex items-center gap-2 text-secondary-600 theme-text-secondary hover:text-secondary-900 theme-text-primary transition-colors"
           >
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
@@ -107,8 +107,8 @@ const Flashcards = () => {
           <Card padding="lg">
             <div className="text-center py-12">
               <div className="text-6xl mb-4">📚</div>
-              <h2 className="text-2xl font-bold text-secondary-900 mb-2">No Flashcards Yet</h2>
-              <p className="text-secondary-600 mb-4">
+              <h2 className="text-2xl font-bold text-secondary-900 theme-text-primary mb-2">No Flashcards Yet</h2>
+              <p className="text-secondary-600 theme-text-secondary mb-4">
                 Flashcards for this lesson haven't been created yet.
               </p>
               <Button onClick={() => navigate(-1)}>Back to Lesson</Button>
@@ -129,22 +129,22 @@ const Flashcards = () => {
         <div className="flex items-center justify-between">
           <button
             onClick={() => navigate(-1)}
-            className="flex items-center gap-2 text-secondary-600 hover:text-secondary-900 transition-colors"
+            className="flex items-center gap-2 text-secondary-600 theme-text-secondary hover:text-secondary-900 theme-text-primary transition-colors"
           >
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
             </svg>
             <span className="font-medium">Back</span>
           </button>
-          <div className="text-sm font-medium text-secondary-600">
+          <div className="text-sm font-medium text-secondary-600 theme-text-secondary dark:text-secondary-400">
             {currentIndex + 1} / {flashcards.length}
           </div>
         </div>
 
         {/* Lesson Title */}
         <div>
-          <h1 className="text-2xl font-bold text-secondary-900">{lesson.title}</h1>
-          <p className="text-secondary-600 mt-1">Flashcards</p>
+          <h1 className="text-2xl font-bold text-secondary-900 theme-text-primary dark:text-secondary-100">{lesson.title}</h1>
+          <p className="text-secondary-600 theme-text-secondary mt-1">Flashcards</p>
         </div>
 
         {/* Progress Dots */}
@@ -174,10 +174,10 @@ const Flashcards = () => {
               <div className="text-sm font-medium text-primary-600 mb-4">
                 {isFlipped ? 'Answer' : 'Question'}
               </div>
-              <p className="text-xl font-medium text-secondary-900 leading-relaxed">
+              <p className="text-xl font-medium text-secondary-900 theme-text-primary leading-relaxed">
                 {isFlipped ? currentCard.back_text : currentCard.front_text}
               </p>
-              <div className="mt-8 text-sm text-secondary-500">
+              <div className="mt-8 text-sm text-secondary-500 theme-text-tertiary dark:text-secondary-400">
                 {isFlipped ? 'Tap to see question' : 'Tap to reveal answer'}
               </div>
             </div>

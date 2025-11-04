@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dark Mode Test</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            secondary: {
+              50: '#F8FAFC',
+              100: '#F1F5F9',
+              800: '#1E293B',
+              900: '#0F172A',
+            }
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body>
+  <div class="min-h-screen bg-secondary-50 dark:bg-secondary-900 p-8 transition-colors">
+    <div class="max-w-md mx-auto bg-white dark:bg-secondary-800 p-6 rounded-lg shadow-lg">
+      <h1 class="text-2xl font-bold text-secondary-900 dark:text-white mb-4">
+        Dark Mode Test
+      </h1>
+      <p class="text-secondary-600 dark:text-secondary-400 mb-4">
+        Click the button to toggle dark mode
+      </p>
+      <button 
+        onclick="toggleDarkMode()"
+        class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
+        Toggle Dark Mode
+      </button>
+      <div class="mt-4">
+        <p class="text-sm">Current mode: <span id="mode" class="font-bold"></span></p>
+        <p class="text-sm">HTML classes: <span id="classes" class="font-mono text-xs"></span></p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function updateStatus() {
+      const isDark = document.documentElement.classList.contains('dark');
+      document.getElementById('mode').textContent = isDark ? 'Dark' : 'Light';
+      document.getElementById('classes').textContent = document.documentElement.className || 'none';
+    }
+
+    function toggleDarkMode() {
+      document.documentElement.classList.toggle('dark');
+      updateStatus();
+    }
+
+    updateStatus();
+  </script>
+</body>
+</html>

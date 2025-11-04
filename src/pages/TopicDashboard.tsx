@@ -71,7 +71,7 @@ const TopicDashboard = () => {
       case 'advanced':
         return 'text-red-700 bg-red-50 border-red-200';
       default:
-        return 'text-secondary-600 bg-secondary-50 border-secondary-200';
+        return 'text-secondary-600 bg-secondary-50 dark:bg-secondary-800 border-secondary-200';
     }
   };
 
@@ -110,7 +110,7 @@ const TopicDashboard = () => {
         {/* Back Button */}
         <button
           onClick={() => navigate('/topics')}
-          className="flex items-center gap-2 text-secondary-600 hover:text-secondary-900 transition-colors"
+          className="flex items-center gap-2 text-secondary-600 theme-text-secondary hover:text-secondary-900 theme-text-primary transition-colors"
         >
           <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path
@@ -128,7 +128,7 @@ const TopicDashboard = () => {
           <div className="flex items-start gap-4">
             <div className="text-6xl">{topic.icon}</div>
             <div className="flex-1">
-              <h1 className="text-3xl font-bold text-secondary-900 mb-2">{topic.title}</h1>
+              <h1 className="text-3xl font-bold text-secondary-900 theme-text-primary mb-2">{topic.title}</h1>
               <div className="flex items-center gap-2 mb-3 flex-wrap">
                 <span
                   className={`text-xs font-semibold px-3 py-1 rounded border capitalize ${getDifficultyColor(
@@ -137,12 +137,12 @@ const TopicDashboard = () => {
                 >
                   {topic.difficulty}
                 </span>
-                <span className="text-xs text-secondary-500 bg-secondary-50 px-3 py-1 rounded">
+                <span className="text-xs text-secondary-500 theme-text-tertiary bg-secondary-50 dark:bg-secondary-800 px-3 py-1 rounded">
                   {topic.category}
                 </span>
               </div>
               <p className="text-secondary-700 mb-4">{topic.description}</p>
-              <div className="flex items-center gap-6 text-sm text-secondary-600">
+              <div className="flex items-center gap-6 text-sm text-secondary-600 theme-text-secondary dark:text-secondary-400">
                 <span className="flex items-center gap-2">
                   <span>📚</span>
                   <span>{lessons.length} lessons</span>
@@ -158,13 +158,13 @@ const TopicDashboard = () => {
 
         {/* Progress Overview */}
         <Card padding="lg">
-          <h2 className="text-xl font-bold text-secondary-900 mb-4">Your Progress</h2>
+          <h2 className="text-xl font-bold text-secondary-900 theme-text-primary mb-4">Your Progress</h2>
           <div className="space-y-2">
             <div className="flex justify-between text-sm">
-              <span className="text-secondary-600">
+              <span className="text-secondary-600 theme-text-secondary dark:text-secondary-400">
                 {topicProgressData?.completed || 0} of {topicProgressData?.total || lessons.length} lessons completed
               </span>
-              <span className="text-secondary-900 font-semibold">{topicProgressData?.percentage || 0}%</span>
+              <span className="text-secondary-900 theme-text-primary font-semibold">{topicProgressData?.percentage || 0}%</span>
             </div>
             <ProgressBar progress={topicProgressData?.percentage || 0} />
           </div>
@@ -172,13 +172,13 @@ const TopicDashboard = () => {
 
         {/* Lessons List */}
         <div>
-          <h2 className="text-2xl font-bold text-secondary-900 mb-4">Lessons</h2>
+          <h2 className="text-2xl font-bold text-secondary-900 theme-text-primary mb-4">Lessons</h2>
           {lessons.length === 0 ? (
             <Card padding="lg">
               <div className="text-center py-8">
                 <div className="text-6xl mb-4">📚</div>
-                <p className="text-lg text-secondary-600">No lessons available yet</p>
-                <p className="text-sm text-secondary-500 mt-2">Check back soon for new content!</p>
+                <p className="text-lg text-secondary-600 theme-text-secondary dark:text-secondary-400">No lessons available yet</p>
+                <p className="text-sm text-secondary-500 theme-text-tertiary mt-2">Check back soon for new content!</p>
               </div>
             </Card>
           ) : (
@@ -199,8 +199,8 @@ const TopicDashboard = () => {
 
                     {/* Lesson Info */}
                     <div className="flex-1 min-w-0">
-                      <h3 className="font-semibold text-secondary-900 mb-1">{lesson.title}</h3>
-                      <div className="flex items-center gap-3 text-sm text-secondary-600">
+                      <h3 className="font-semibold text-secondary-900 theme-text-primary mb-1">{lesson.title}</h3>
+                      <div className="flex items-center gap-3 text-sm text-secondary-600 theme-text-secondary dark:text-secondary-400">
                         <span className="flex items-center gap-1">
                           <span>⏱️</span>
                           <span>{lesson.estimated_read_time}m read</span>

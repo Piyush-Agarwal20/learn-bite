@@ -26,13 +26,25 @@ const TopicCard = ({
   const getDifficultyColor = (diff: string) => {
     switch (diff) {
       case 'beginner':
-        return 'text-green-700 bg-green-50 border-green-200';
+        return {
+          className: 'text-green-700 bg-green-50 border-green-200',
+          darkStyle: { backgroundColor: 'rgba(34, 197, 94, 0.1)', color: '#4ADE80', borderColor: 'rgba(34, 197, 94, 0.3)' }
+        };
       case 'intermediate':
-        return 'text-blue-700 bg-blue-50 border-blue-200';
+        return {
+          className: 'text-blue-700 bg-blue-50 border-blue-200',
+          darkStyle: { backgroundColor: 'rgba(59, 130, 246, 0.1)', color: '#60A5FA', borderColor: 'rgba(59, 130, 246, 0.3)' }
+        };
       case 'advanced':
-        return 'text-red-700 bg-red-50 border-red-200';
+        return {
+          className: 'text-red-700 bg-red-50 border-red-200',
+          darkStyle: { backgroundColor: 'rgba(239, 68, 68, 0.1)', color: '#F87171', borderColor: 'rgba(239, 68, 68, 0.3)' }
+        };
       default:
-        return 'text-secondary-600 bg-secondary-50 border-secondary-200';
+        return {
+          className: 'text-secondary-600 bg-secondary-50 border-secondary-200',
+          darkStyle: { backgroundColor: 'var(--bg-tertiary)', color: 'var(--text-secondary)', borderColor: 'var(--border-color)' }
+        };
     }
   };
 
@@ -46,6 +58,8 @@ const TopicCard = ({
   const progressPercentage =
     totalLessons && completedLessons ? Math.round((completedLessons / totalLessons) * 100) : 0;
 
+  const difficultyColors = getDifficultyColor(difficulty);
+
   return (
     <Card hoverable clickable padding="lg" onClick={onClick}>
       <div className="flex items-start gap-4">
@@ -55,18 +69,23 @@ const TopicCard = ({
         {/* Content */}
         <div className="flex-1 min-w-0">
           {/* Title */}
-          <h3 className="font-bold text-lg text-secondary-900 mb-1 truncate">{title}</h3>
+          <h3 className="font-bold text-lg mb-1 truncate" style={{ color: 'var(--text-primary)' }}>{title}</h3>
 
           {/* Meta Info */}
           <div className="flex items-center gap-2 mb-2 flex-wrap">
             <span
-              className={`text-xs font-semibold px-2 py-1 rounded border capitalize ${getDifficultyColor(
-                difficulty
-              )}`}
+              className={`text-xs font-semibold px-2 py-1 rounded border capitalize ${difficultyColors.className}`}
+              style={difficultyColors.darkStyle}
             >
               {difficulty}
             </span>
-            <span className="text-xs text-secondary-500 bg-secondary-50 px-2 py-1 rounded">
+            <span
+              className="text-xs px-2 py-1 rounded"
+              style={{
+                backgroundColor: 'var(--bg-tertiary)',
+                color: 'var(--text-secondary)'
+              }}
+            >
               {category}
             </span>
           </div>
@@ -75,7 +94,7 @@ const TopicCard = ({
           <p className="text-sm text-secondary-600 mb-3 line-clamp-2">{description}</p>
 
           {/* Stats */}
-          <div className="flex items-center gap-4 text-sm text-secondary-600">
+          <div className="flex items-center gap-4 text-sm text-secondary-600 dark:text-secondary-400 dark:text-secondary-500">
             {totalLessons !== undefined && (
               <span className="flex items-center gap-1">
                 <span>📚</span>
@@ -93,7 +112,7 @@ const TopicCard = ({
           {/* Progress Bar (if lessons exist) */}
           {totalLessons !== undefined && totalLessons > 0 && (
             <div className="mt-3">
-              <div className="w-full bg-secondary-100 rounded-full h-2 overflow-hidden">
+              <div className="w-full bg-secondary-100 dark:bg-secondary-700 rounded-full h-2 overflow-hidden">
                 <div
                   className="bg-primary-500 h-full rounded-full transition-all duration-300"
                   style={{ width: `${progressPercentage}%` }}

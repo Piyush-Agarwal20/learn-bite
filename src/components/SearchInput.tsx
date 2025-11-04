@@ -18,7 +18,7 @@ const SearchInput: React.FC<SearchInputProps> = ({
   return (
     <div className={`relative ${widthStyles} ${className}`}>
       {/* Search Icon */}
-      <div className="absolute left-4 top-1/2 -translate-y-1/2 text-secondary-400">
+      <div className="absolute left-4 top-1/2 -translate-y-1/2 text-secondary-400 dark:text-secondary-500">
         <svg
           className="w-5 h-5"
           fill="none"
@@ -36,7 +36,7 @@ const SearchInput: React.FC<SearchInputProps> = ({
 
       <input
         type="search"
-        className={`${widthStyles} pl-12 pr-12 py-3 border-2 border-secondary-200 rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:border-primary-500 focus:ring-primary-200 min-h-[44px]`}
+        className={`${widthStyles} pl-12 pr-12 py-3 border-2 border-secondary-200 dark:border-secondary-700 rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:border-primary-500 focus:ring-primary-200 min-h-[44px]`}
         value={value}
         {...props}
       />

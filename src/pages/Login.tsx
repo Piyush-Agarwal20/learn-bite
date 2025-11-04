@@ -32,7 +32,7 @@ const Login = () => {
       <Card className="w-full max-w-md" padding="lg">
         <div className="text-center mb-8">
           <h1 className="text-4xl font-bold text-primary-600 mb-2">LearnBite</h1>
-          <p className="text-secondary-600">Welcome back! Sign in to continue learning</p>
+          <p className="text-secondary-600 theme-text-secondary dark:text-secondary-400">Welcome back! Sign in to continue learning</p>
         </div>
 
         <form onSubmit={handleLogin} className="space-y-4">
@@ -92,7 +92,7 @@ const Login = () => {
           </Button>
 
           <div className="text-center mt-6">
-            <p className="text-secondary-600">
+            <p className="text-secondary-600 theme-text-secondary dark:text-secondary-400">
               Don't have an account?{' '}
               <Link to="/signup" className="text-primary-600 hover:text-primary-700 font-semibold">
                 Sign Up

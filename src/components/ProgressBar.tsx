@@ -40,15 +40,15 @@ const ProgressBar: React.FC<ProgressBarProps> = ({
     <div className={`w-full ${className}`}>
       {(showLabel || label) && (
         <div className="flex justify-between items-center mb-2">
-          <span className="text-sm font-medium text-secondary-700">
+          <span className="text-sm font-medium text-secondary-700 dark:text-secondary-300">
             {label || 'Progress'}
           </span>
-          <span className="text-sm font-semibold text-secondary-900">
+          <span className="text-sm font-semibold text-secondary-900 dark:text-secondary-100">
             {clampedProgress}%
           </span>
         </div>
       )}
-      <div className={`w-full bg-secondary-200 rounded-full overflow-hidden ${sizeStyles[size]}`}>
+      <div className={`w-full bg-secondary-200 dark:bg-secondary-700 rounded-full overflow-hidden ${sizeStyles[size]}`}>
         <div
           className={`${sizeStyles[size]} ${colorStyles[color]} ${animationStyles} rounded-full`}
           style={{ width: `${clampedProgress}%` }}

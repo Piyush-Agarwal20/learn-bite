@@ -121,7 +121,7 @@ const QuizPage = () => {
         <div className="space-y-6 py-4">
           <button
             onClick={() => navigate(-1)}
-            className="flex items-center gap-2 text-secondary-600 hover:text-secondary-900 transition-colors"
+            className="flex items-center gap-2 text-secondary-600 theme-text-secondary hover:text-secondary-900 theme-text-primary transition-colors"
           >
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
@@ -132,8 +132,8 @@ const QuizPage = () => {
           <Card padding="lg">
             <div className="text-center py-12">
               <div className="text-6xl mb-4">📝</div>
-              <h2 className="text-2xl font-bold text-secondary-900 mb-2">No Quiz Available</h2>
-              <p className="text-secondary-600 mb-4">
+              <h2 className="text-2xl font-bold text-secondary-900 theme-text-primary mb-2">No Quiz Available</h2>
+              <p className="text-secondary-600 theme-text-secondary mb-4">
                 Quiz questions for this lesson haven't been created yet.
               </p>
               <Button onClick={() => navigate(-1)}>Back to Lesson</Button>
@@ -155,7 +155,7 @@ const QuizPage = () => {
           {/* Header */}
           <button
             onClick={() => navigate(-1)}
-            className="flex items-center gap-2 text-secondary-600 hover:text-secondary-900 transition-colors"
+            className="flex items-center gap-2 text-secondary-600 theme-text-secondary hover:text-secondary-900 theme-text-primary transition-colors"
           >
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
@@ -175,10 +175,10 @@ const QuizPage = () => {
               )}
             </div>
 
-            <h2 className="text-3xl font-bold text-secondary-900 mb-2">
+            <h2 className="text-3xl font-bold text-secondary-900 theme-text-primary mb-2">
               {passed ? 'Great Job!' : 'Keep Practicing!'}
             </h2>
-            <p className="text-secondary-600 mb-6">
+            <p className="text-secondary-600 theme-text-secondary mb-6">
               {passed
                 ? 'You passed the quiz! Well done!'
                 : 'You can review the lesson and try again.'}
@@ -196,7 +196,7 @@ const QuizPage = () => {
 
             {/* Question Review */}
             <div className="text-left space-y-3 mb-6">
-              <h3 className="font-bold text-secondary-900 text-center mb-4">Question Review</h3>
+              <h3 className="font-bold text-secondary-900 theme-text-primary text-center mb-4">Question Review</h3>
               {quizzes.map((quiz, index) => {
                 const userAnswer = answers[index];
                 const isCorrect = userAnswer === quiz.correct_answer;
@@ -213,7 +213,7 @@ const QuizPage = () => {
                     ) : (
                       <XCircle className="w-5 h-5 text-red-600 flex-shrink-0" />
                     )}
-                    <span className="text-sm text-secondary-900 flex-1">
+                    <span className="text-sm text-secondary-900 theme-text-primary flex-1">
                       Question {index + 1}
                     </span>
                     <span className={`text-xs font-medium ${
@@ -262,22 +262,22 @@ const QuizPage = () => {
         <div className="flex items-center justify-between">
           <button
             onClick={() => navigate(-1)}
-            className="flex items-center gap-2 text-secondary-600 hover:text-secondary-900 transition-colors"
+            className="flex items-center gap-2 text-secondary-600 theme-text-secondary hover:text-secondary-900 theme-text-primary transition-colors"
           >
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
             </svg>
             <span className="font-medium">Back</span>
           </button>
-          <div className="text-sm font-medium text-secondary-600">
+          <div className="text-sm font-medium text-secondary-600 theme-text-secondary dark:text-secondary-400">
             Question {currentIndex + 1} / {quizzes.length}
           </div>
         </div>
 
         {/* Lesson Title */}
         <div>
-          <h1 className="text-2xl font-bold text-secondary-900">{lesson.title}</h1>
-          <p className="text-secondary-600 mt-1">Quiz</p>
+          <h1 className="text-2xl font-bold text-secondary-900 theme-text-primary dark:text-secondary-100">{lesson.title}</h1>
+          <p className="text-secondary-600 theme-text-secondary mt-1">Quiz</p>
         </div>
 
         {/* Progress Bar */}
@@ -294,7 +294,7 @@ const QuizPage = () => {
             <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-primary-100 text-primary-600 font-bold mb-4">
               {currentIndex + 1}
             </div>
-            <h2 className="text-xl font-bold text-secondary-900 leading-relaxed">
+            <h2 className="text-xl font-bold text-secondary-900 theme-text-primary leading-relaxed">
               {currentQuiz.question_text}
             </h2>
           </div>

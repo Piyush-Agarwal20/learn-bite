@@ -19,12 +19,13 @@ const Card: React.FC<CardProps> = ({
   onClick,
   className = '',
 }) => {
-  const baseStyles = 'bg-white rounded-lg transition-all duration-200';
+  const baseStyles = 'theme-card-bg rounded-lg transition-all duration-200';
+  const cardStyle = { backgroundColor: 'var(--card-bg)', color: 'var(--text-primary)' };
 
   const variantStyles = {
-    default: 'shadow-sm',
-    elevated: 'shadow-lg',
-    outlined: 'border-2 border-secondary-200 shadow-none',
+    default: 'shadow-sm dark:shadow-secondary-900/50',
+    elevated: 'shadow-lg dark:shadow-secondary-900/50',
+    outlined: 'border-2 border-secondary-200 dark:border-secondary-700 shadow-none',
   };
 
   const paddingStyles = {
@@ -35,13 +36,14 @@ const Card: React.FC<CardProps> = ({
   };
 
   const interactiveStyles = hoverable
-    ? 'hover:shadow-xl hover:-translate-y-1'
+    ? 'hover:shadow-xl dark:hover:shadow-secondary-900/70 hover:-translate-y-1'
     : '';
   const clickableStyles = clickable || onClick ? 'cursor-pointer' : '';
 
   return (
     <div
       className={`${baseStyles} ${variantStyles[variant]} ${paddingStyles[padding]} ${interactiveStyles} ${clickableStyles} ${className}`}
+      style={cardStyle}
       onClick={onClick}
     >
       {children}

@@ -52,7 +52,7 @@ const LoadingSpinner: React.FC<LoadingSpinnerProps> = ({
         ></path>
       </svg>
       {message && (
-        <p className="text-sm font-medium text-secondary-600">{message}</p>
+        <p className="text-sm font-medium text-secondary-600 dark:text-secondary-400 dark:text-secondary-500">{message}</p>
       )}
     </div>
   );

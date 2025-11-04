@@ -27,11 +27,16 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
     // Apply theme to document
     const root = document.documentElement;
 
+    console.log('🎨 Theme changed to:', theme);
+    console.log('📄 Document classes before:', root.className);
+
     if (theme === 'dark') {
       root.classList.add('dark');
     } else {
       root.classList.remove('dark');
     }
+
+    console.log('📄 Document classes after:', root.className);
 
     // Save to localStorage
     localStorage.setItem('theme', theme);

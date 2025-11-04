@@ -51,7 +51,7 @@ const Signup = () => {
       <Card className="w-full max-w-md" padding="lg">
         <div className="text-center mb-8">
           <h1 className="text-4xl font-bold text-primary-600 mb-2">Join LearnBite</h1>
-          <p className="text-secondary-600">Start your learning journey today</p>
+          <p className="text-secondary-600 theme-text-secondary dark:text-secondary-400">Start your learning journey today</p>
         </div>
 
         <form onSubmit={handleSignup} className="space-y-4">
@@ -113,7 +113,7 @@ const Signup = () => {
           </Button>
 
           <div className="text-center mt-6">
-            <p className="text-secondary-600">
+            <p className="text-secondary-600 theme-text-secondary dark:text-secondary-400">
               Already have an account?{' '}
               <Link to="/login" className="text-primary-600 hover:text-primary-700 font-semibold">
                 Sign In

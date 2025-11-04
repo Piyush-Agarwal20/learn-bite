@@ -46,6 +46,60 @@
   --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
 }
 
+/* Theme CSS Variables */
+:root {
+  /* Light theme (default) */
+  --bg-primary: #F8FAFC;
+  --bg-secondary: #FFFFFF;
+  --bg-tertiary: #F1F5F9;
+  --text-primary: #0F172A;
+  --text-secondary: #475569;
+  --text-tertiary: #64748B;
+  --border-color: #E2E8F0;
+  --card-bg: #FFFFFF;
+  --hover-bg: #F1F5F9;
+  --input-bg: #FFFFFF;
+}
+
+/* Utility classes using CSS variables */
+.theme-bg-primary {
+  background-color: var(--bg-primary) !important;
+}
+
+.theme-bg-secondary {
+  background-color: var(--bg-secondary) !important;
+}
+
+.theme-card-bg {
+  background-color: var(--card-bg) !important;
+  color: var(--text-primary) !important;
+}
+
+.theme-text-primary {
+  color: var(--text-primary) !important;
+}
+
+.theme-text-secondary {
+  color: var(--text-secondary) !important;
+}
+
+.theme-text-tertiary {
+  color: var(--text-tertiary) !important;
+}
+
+.theme-border {
+  border-color: var(--border-color) !important;
+}
+
+.theme-hover:hover {
+  background-color: var(--hover-bg) !important;
+}
+
+/* Override specific Tailwind classes with theme variables */
+* {
+  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
 @layer base {
   * {
     -webkit-tap-highlight-color: transparent;
@@ -66,5 +120,7 @@
     overflow-x: hidden;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
   }
 }

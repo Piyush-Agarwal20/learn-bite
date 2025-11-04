@@ -71,9 +71,9 @@ const Bookmarks = () => {
         <div className="text-left">
           <div className="flex items-center gap-2">
             <BookmarkIcon className="w-7 h-7 text-yellow-600" />
-            <h1 className="text-3xl font-bold text-secondary-900">Bookmarks</h1>
+            <h1 className="text-3xl font-bold text-secondary-900 theme-text-primary dark:text-secondary-100">Bookmarks</h1>
           </div>
-          <p className="text-secondary-600 mt-1">Your saved lessons for later</p>
+          <p className="text-secondary-600 theme-text-secondary mt-1">Your saved lessons for later</p>
         </div>
 
         {/* Bookmarks List */}
@@ -91,15 +91,15 @@ const Bookmarks = () => {
                       <p className="text-xs text-primary-600 font-medium">
                         {bookmark.lessons.topics.title}
                       </p>
-                      <h3 className="text-lg font-bold text-secondary-900 mt-1 hover:text-primary-600 transition-colors">
+                      <h3 className="text-lg font-bold text-secondary-900 theme-text-primary mt-1 hover:text-primary-600 transition-colors">
                         {bookmark.lessons.title}
                       </h3>
                       <div className="flex items-center gap-3 mt-2">
-                        <span className="text-xs text-secondary-600 flex items-center gap-1">
+                        <span className="text-xs text-secondary-600 theme-text-secondary flex items-center gap-1">
                           <Clock className="w-3 h-3" />
                           {bookmark.lessons.estimated_read_time} min
                         </span>
-                        <span className="text-xs text-secondary-500">
+                        <span className="text-xs text-secondary-500 theme-text-tertiary dark:text-secondary-400">
                           Saved {new Date(bookmark.created_at).toLocaleDateString()}
                         </span>
                       </div>
@@ -121,8 +121,8 @@ const Bookmarks = () => {
           <Card padding="lg">
             <div className="text-center py-12">
               <BookmarkIcon className="w-16 h-16 text-secondary-300 mx-auto mb-4" />
-              <h3 className="text-xl font-bold text-secondary-900 mb-2">No Bookmarks Yet</h3>
-              <p className="text-secondary-600 mb-6">
+              <h3 className="text-xl font-bold text-secondary-900 theme-text-primary mb-2">No Bookmarks Yet</h3>
+              <p className="text-secondary-600 theme-text-secondary mb-6">
                 Save lessons you want to revisit later by clicking the bookmark icon
               </p>
               <button

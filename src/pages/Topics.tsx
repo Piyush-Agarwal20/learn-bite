@@ -53,8 +53,8 @@ const Topics = () => {
       <div className="space-y-6 py-4">
         {/* Header */}
         <div>
-          <h1 className="text-3xl font-bold text-secondary-900">Explore Topics</h1>
-          <p className="text-secondary-600 mt-1">Choose what you want to learn today</p>
+          <h1 className="text-3xl font-bold text-secondary-900 theme-text-primary dark:text-secondary-100">Explore Topics</h1>
+          <p className="text-secondary-600 theme-text-secondary mt-1">Choose what you want to learn today</p>
         </div>
 
         {/* Search */}
@@ -77,6 +77,14 @@ const Topics = () => {
                   ? 'bg-primary-500 text-white'
                   : 'bg-secondary-100 text-secondary-700 hover:bg-secondary-200'
               }`}
+              style={
+                selectedCategory !== category
+                  ? {
+                      backgroundColor: 'var(--bg-tertiary)',
+                      color: 'var(--text-primary)',
+                    }
+                  : undefined
+              }
             >
               {category}
             </button>
@@ -94,10 +102,11 @@ const Topics = () => {
         {error && !loading && (
           <div className="text-center py-12">
             <div className="text-6xl mb-4">⚠️</div>
-            <p className="text-lg text-red-600 mb-2">{error}</p>
+            <p className="text-lg text-red-600 theme-text-primary mb-2" style={{ color: '#EF4444' }}>{error}</p>
             <button
               onClick={() => window.location.reload()}
               className="text-primary-600 hover:text-primary-700 font-medium"
+              style={{ color: 'var(--text-secondary)' }}
             >
               Try again
             </button>
@@ -126,8 +135,8 @@ const Topics = () => {
         {!loading && !error && topics.length === 0 && (
           <div className="text-center py-12">
             <div className="text-6xl mb-4">🔍</div>
-            <p className="text-lg text-secondary-600">No topics found</p>
-            <p className="text-sm text-secondary-500 mt-2">Try adjusting your search or filters</p>
+            <p className="text-lg text-secondary-600 theme-text-secondary dark:text-secondary-400">No topics found</p>
+            <p className="text-sm text-secondary-500 theme-text-tertiary mt-2">Try adjusting your search or filters</p>
           </div>
         )}
       </div>
